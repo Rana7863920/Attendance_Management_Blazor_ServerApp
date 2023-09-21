@@ -1,0 +1,67 @@
+﻿@page "/"
+@using BlazorProject.Service.IService;
+@using BlazorProject.Models
+
+<PageTitle>Index</PageTitle>
+
+<div class="row">
+    @if (UserName != "")
+    {
+        <div class="col-md-8">
+            <h1>Hi, @UserName</h1>
+            @if (Count > 0)
+            {
+                <div class="row">
+                    🕛
+                    <p>In Time</p>
+                    <p> @TimeIn</p>
+                </div>
+
+            }
+        </div>
+        <div class="col-md-4">
+            @if (Punch == "Punch In")
+            {
+            <button type="button" class="form-control btn-primary btn-lg" @onclick="() => PunchInOut()">@Punch</button>
+            }
+            else
+            {
+            <button type="button" class="form-control btn-danger btn-lg" @onclick="() => PunchInOut()">@Punch</button>
+            }
+        </div>
+    }
+</div>
+
+
+
+
+
+@code {
+    [Inject]
+    protected IUserService userService { get; set; }
+    public string UserName { get; set; }
+    public string Punch { get; set; } = "Punch In";
+    public UserAttendance User { get; set; }
+    public string TimeIn { get; set; }
+    public int Count { get; set; } = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserName = userService.GetUserName();
+    }
+
+    protected void PunchInOut()
+    {
+        if (Punch == "Punch In")
+        {
+            Count++;
+            Punch = "Punch Out";
+            User = userService.PunchIn();
+            TimeIn = User.TimeIn.ToString("hh:mm tt");
+        }
+        else
+        {
+            Punch = "Punch In";
+        }
+    }
+}
