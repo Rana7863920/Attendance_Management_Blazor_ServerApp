@@ -34,5 +34,11 @@ namespace BlazorProject.Service
             var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
             return task;
         }
+
+        public void UpdateTask(Models.Task task)
+        {
+            _context.Tasks.Update(task);
+            _context.SaveChanges();
+        }
     }
 }

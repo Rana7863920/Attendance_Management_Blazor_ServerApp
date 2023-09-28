@@ -1,4 +1,5 @@
 ﻿@using BlazorProject.Models;
+@using BlazorProject.Service.IService;
 <div class="job-status m-3 dropzone @dropClass" style="border:1px solid black;width:25%;background-color:lightgrey;overflow:hidden"
      ondragover="event.preventDefault();"
      ondragstart="event.dataTransfer.setData('', event.target.id);"
@@ -31,6 +32,8 @@
 </div>
 
 @code {
+    [Inject]
+    protected ITaskService taskService { get; set; }
     [CascadingParameter]
     TaskContainer Container { get; set; }
     [Parameter]
@@ -67,5 +70,8 @@
         dropClass = "";
         if (AllowedStatuses != null && !AllowedStatuses.Contains(Container.Payload.TaskStatuses)) return;
         await Container.UpdateJobAsync(ListStatus);
+        var task = taskService.GetTaskById(Container.Payload.Id);
+        task.TaskStatuses = ListStatus;
+        taskService.UpdateTask(task);
     }
 }
