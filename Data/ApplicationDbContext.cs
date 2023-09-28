@@ -13,5 +13,7 @@ namespace BlazorProject.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<UserAttendance> UserAttendances { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Models.Task> Tasks { get; set; }
     }
 }

@@ -20,8 +20,16 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Attendance.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXR0ZW5kYW5jZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/EditTaskModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFRhc2tNb2RhbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Blazor/BlazorProject/BlazorProject/Pages/FetchData.razor]
@@ -30,6 +38,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Task.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFzay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/TaskContainer.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza0NvbnRhaW5lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/TaskList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza0xpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/TaskModal2.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza01vZGFsMi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/TaskRecord.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza1JlY29yZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/TaskStatus.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza1N0YXR1cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Blazor/BlazorProject/BlazorProject/Shared/LoginDisplay.razor]

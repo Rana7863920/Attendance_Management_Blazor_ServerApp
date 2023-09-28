@@ -1,0 +1,147 @@
+﻿@using BlazorProject.Models;
+@using BlazorProject.Service.IService;
+@using System.Globalization
+@inject NavigationManager _navigationManager
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+
+<div class="modal fade show @showClass" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:darkblue;color:white">
+                <h5 class="modal-title" style="margin-left:34%;" id="taskModalLabel">Add Your Task</h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseModal"><span class="oi oi-circle-x"></span></button>
+            </div>
+            <EditForm Model="@Task" OnValidSubmit="@SubmitForm">
+                <div class="modal-body">
+
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <label style="margin-left:-2%;color:black;font-size:large">Assigned To</label>
+                            <InputSelect @bind-Value="Task.UserId" class="p-lg-2">
+                                <option selected disabled class="text-center"></option>
+                                @foreach (var user in UserList)
+                                {
+                                    <option value="@user.Id">@user.Name</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group p-2">
+                        <div class="row">
+                            <div class="col-md-6 mr-2">
+                                <label style="font-size:large">Project</label>
+                                <InputSelect @bind-Value="Task.ProjectId" class="p-lg-2">
+                                    @foreach (var project in ProjectList)
+                                    {
+                                        <option value="@project.Id">@project.Name</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <div class="col-md-6 ml-2">
+                                <label style="font-size:large">Task Name</label>
+                                <InputText @bind-Value="Task.TaskName" class="form-control" placeholder="Task-Name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <label style="margin-left:-2%;font-size:large">Description</label>
+                            <InputTextArea @bind-Value="Task.Description" placeholder="Add Description here..."></InputTextArea>
+                        </div>
+                    </div>
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <label style="margin-left:-2%;font-size:large">Priority</label>
+                            <InputSelect @bind-Value="Task.Priority" class="p-lg-2">
+                                @foreach (var priority in Enum.GetValues(typeof(Priority)))
+                                {
+                                    <option value="@priority">@priority</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <label style="margin-left:-2%;font-size:large">Status</label>
+                            <InputSelect @bind-Value="Task.TaskStatuses" class="p-lg-2">
+                                @foreach (var taskStatus in Enum.GetValues(typeof(TaskStatuses)))
+                                {
+                                    <option value="@taskStatus">@taskStatus</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group p-2">
+                        <div class="row">
+                            <div class="col-md-6 mr-2">
+                                <label for="startDate" style="font-size:large">Start Date</label>
+                                <InputDate @bind-Value="DateValue" min="@DateValue.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+                            </div>
+                            <div class="col-md-6 ml-2">
+                                <label for="endDate" style="font-size:large">End Date</label>
+                                <InputDate @bind-Value="Task.EndDate" min="@DateValue.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
+                    <button type="submit" class="btn btn-primary" style="background-color:darkblue;" value="Save">Save</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject]
+    protected IUserService userService { get; set; }
+    [Inject]
+    protected IProjectService projectService { get; set; }
+    [Inject]
+    protected ITaskService taskService { get; set; }
+    protected bool IsVisible { get; set; } = false;
+    protected Models.Task Task { get; set; } = new Models.Task();
+    protected IEnumerable<ApplicationUser> UserList { get; set; }
+    protected IEnumerable<Project> ProjectList { get; set; }
+    protected DateTime DateValue { get; set; } = DateTime.Now.AddDays(-1);
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        UserList = userService.GetAllUsers();
+        ProjectList = projectService.GetAllProjects();
+        Task.StartDate = DateTime.Now;
+        Task.EndDate = DateTime.Now;
+    }
+
+    public void Show()
+    {
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public void CloseModal()
+    {
+        IsVisible = false;
+    }
+
+    public void SubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            bool Saved = taskService.CreateTask(Task);
+            if (Saved)
+            {
+                IsVisible = false;
+                Task.UserId = String.Empty;
+                Task.ProjectId = Int32.MinValue;
+                Task.TaskName = String.Empty;
+                Task.Description = String.Empty;
+            }
+            _navigationManager.NavigateTo("/task", forceLoad: true);
+        }
+    }
+}

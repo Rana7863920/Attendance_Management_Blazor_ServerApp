@@ -3,58 +3,84 @@
 @using BlazorProject.Models
 
 <PageTitle>Index</PageTitle>
-
-<div class="row">
+<AuthorizeView Roles="Individual User">
     @if (UserName != "")
     {
-        <div class="col-md-8">
-            <h1>Hi, @UserName</h1>
-            @if (Count > 0)
-            {
-                <div class="row">
-                    🕛
-                    <p>In Time</p>
-                    <p> @TimeIn</p>
-                </div>
-
-            }
-        </div>
-        <div class="col-md-4">
-            @if (Punch == "Punch In")
-            {
-            <button type="button" class="form-control btn-primary btn-lg" @onclick="() => PunchInOut()">@Punch</button>
-            }
-            else
-            {
-            <button type="button" class="form-control btn-danger btn-lg" @onclick="() => PunchInOut()">@Punch</button>
-            }
+        <div class="row m-2 p-2 rounded text-white" style="background-image: linear-gradient(to right, mediumslateblue, purple); font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;text-shadow: 2px 2px 4px #000000;">
+            <div class="col-sm-1 bg-light display-1">
+                <p class="m-auto" style="color:mediumslateblue">@Letter</p>
+            </div>
+            <div class="col-md-7">
+                <h1>Hi, @UserName</h1>
+                @if (TimeIn != null)
+                {
+                    <div class="row">
+                        <div class="col-sm-1 h1">
+                            <span class="oi oi-account-login"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <p class="m-0" style="color:lightyellow">In Time</p>
+                            <p class="m-0"> @TimeIn</p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-4">
+                @if (TimeIn != null)
+                {
+                    <button type="button" class="form-control btn-danger btn-lg rounded text-white" style="text-shadow: 2px 2px 4px #000000;" @onclick="() => PunchInOut()">@Punch</button>
+                }
+                else
+                {
+                    <button type="button" class="form-control btn-success btn-lg rounded text-white" style="background-color:lightseagreen;text-shadow: 2px 2px 4px #000000;" @onclick="() => PunchInOut()">@Punch</button>
+                }
+            </div>
         </div>
     }
-</div>
-
-
-
+</AuthorizeView>
 
 
 @code {
     [Inject]
     protected IUserService userService { get; set; }
-    public string UserName { get; set; }
-    public string Punch { get; set; } = "Punch In";
-    public UserAttendance User { get; set; }
-    public string TimeIn { get; set; }
-    public int Count { get; set; } = 0;
+    protected string UserName { get; set; }
+    protected Char Letter { get; set; }
+    protected string Punch { get; set; }
+    protected UserAttendance User { get; set; }
+    protected string TimeIn { get; set; }
+    private bool AutoTimeOut { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
         UserName = userService.GetUserName();
+        User = userService.GetUser();
+        if(User != null)
+        {
+            TimeIn = User.TimeIn.ToString("hh:mm tt"); 
+        }
+        AutoTimeOut = userService.GetAutoTimeOut();
+        if (AutoTimeOut == true)
+        {
+            TimeIn = null;
+        }
+        if(TimeIn != null)
+        {
+            Punch = "Punch Out";
+        }
+        else
+        {
+            Punch = "Punch In";
+        }
+        if(UserName != "")
+        {
+            Letter = UserName[0];
+        }
     }
 
     protected void PunchInOut()
     {
         if (Punch == "Punch In")
         {
-            Count++;
             Punch = "Punch Out";
             User = userService.PunchIn();
             TimeIn = User.TimeIn.ToString("hh:mm tt");
@@ -62,6 +88,8 @@
         else
         {
             Punch = "Punch In";
+            TimeIn = null;
+            userService.PunchOut();
         }
     }
 }

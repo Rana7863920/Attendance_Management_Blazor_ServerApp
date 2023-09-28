@@ -1,0 +1,48 @@
+﻿@page "/attendance"
+@using BlazorProject.Models
+@using BlazorProject.Service.IService
+<h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Attendance Record</h1>
+
+@if (UserAttendanceList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered table-striped table-active">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time In</th>
+                <th>Time Out</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attendance in UserAttendanceList)
+            {
+                <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    <td>@attendance.CurrentDate.ToShortDateString()</td>
+                    <td>@attendance.TimeIn.ToString("hh:mm tt")</td>
+                    @if(attendance.TimeOut.ToString("HH:mm") == "00:00"){
+                        <td>--:--</td>
+                    }else{
+                        <td>@attendance.TimeOut.ToString("hh:mm tt")</td>
+                    }
+                    <td>@attendance.Duration.ToString(@"h\:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Inject]
+    protected IUserService userService { get; set; }
+    protected IEnumerable<UserAttendance> UserAttendanceList { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        UserAttendanceList =  userService.GetAttendances();
+    }
+}

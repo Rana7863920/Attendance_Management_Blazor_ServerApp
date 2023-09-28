@@ -1,0 +1,39 @@
+﻿@page "/taskStatus"
+@using BlazorProject.Models;
+@using BlazorProject.Service.IService;
+
+<h3 class="text-center">TaskStatus</h3>
+
+<TaskContainer Tasks="Tasks" OnStatusUpdated="HandleStatusUpdated">
+    <div style="display:flex;flex-direction:row">
+        <TaskList ListStatus="TaskStatuses.Backlog" AllowedStatuses="@(new TaskStatuses[] { TaskStatuses.Development, TaskStatuses.Testing})" />
+        <TaskList ListStatus="TaskStatuses.Development" AllowedStatuses="@(new TaskStatuses[] { TaskStatuses.Backlog, TaskStatuses.Testing})" />
+        <TaskList ListStatus="TaskStatuses.Testing" AllowedStatuses="@(new TaskStatuses[] { TaskStatuses.Development})" />
+        <TaskList ListStatus="TaskStatuses.Completed" AllowedStatuses="@(new TaskStatuses[] { TaskStatuses.Testing })" />
+    </div>
+</TaskContainer>
+@code {
+    [Inject]
+    protected ITaskService taskService { get; set; }
+    [Inject]
+    protected IProjectService projectService { get; set; }
+    [Inject]
+    protected IUserService userService { get; set; }
+    List<Models.Task> Tasks = new List<Models.Task>();
+    string lastUpdatedTask = "";
+    protected override void OnInitialized()
+    {
+        Tasks = taskService.GetTasks();
+        foreach (var task in Tasks)
+        {
+            var project = projectService.GetProjectById(task.ProjectId);
+            task.Project = project;
+            var user = userService.GetUserById(task.UserId);
+            task.ApplicationUser = user;
+        }
+    }
+    void HandleStatusUpdated(Models.Task updatedTask)
+    {
+        lastUpdatedTask = updatedTask.Description;
+    }
+}

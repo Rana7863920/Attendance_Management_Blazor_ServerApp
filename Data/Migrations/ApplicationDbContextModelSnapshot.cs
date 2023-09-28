@@ -22,6 +22,23 @@ namespace BlazorProject.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("BlazorProject.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("BlazorProject.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -43,6 +60,50 @@ namespace BlazorProject.Data.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("BlazorProject.Models.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TaskName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TaskStatuses")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tasks");
+                });
+
             modelBuilder.Entity("BlazorProject.Models.UserAttendance", b =>
                 {
                     b.Property<int>("Id")
@@ -54,8 +115,8 @@ namespace BlazorProject.Data.Migrations
                     b.Property<DateTime>("CurrentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Duration")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
 
                     b.Property<DateTime>("TimeIn")
                         .HasColumnType("datetime2");
@@ -299,6 +360,25 @@ namespace BlazorProject.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("BlazorProject.Models.Task", b =>
+                {
+                    b.HasOne("BlazorProject.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorProject.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("BlazorProject.Models.UserAttendance", b =>

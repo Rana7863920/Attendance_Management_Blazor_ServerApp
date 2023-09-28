@@ -8,7 +8,7 @@ namespace BlazorProject.Models
         public DateTime CurrentDate { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime TimeOut { get; set; }
-        public DateTime Duration { get; set; }
+        public TimeSpan Duration { get; set; }
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

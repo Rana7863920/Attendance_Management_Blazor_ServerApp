@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +26,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().
     AddDefaultTokenProviders().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITaskService, TaskService>();    
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 var app = builder.Build();
 

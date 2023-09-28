@@ -1,0 +1,89 @@
+﻿@page "/task"
+@using BlazorProject.Models
+@using BlazorProject.Service.IService;
+<div class="row">
+    <div class="col-md-9">
+        <h3 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Task List</h3>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="form-control btn btn-primary" @onclick="RedirectPage"><span class="oi oi-plus"></span>&nbsp;&nbsp;Add Task</button>
+    </div>
+</div>
+@if (TaskList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered table-striped table-active m-2 p-2">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Project</th>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Description</th>
+                <th>Task Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in TaskList)
+            {
+                <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    <td>@task.ApplicationUser.Name</td>
+                    <td>@task.Project.Name</td>
+                    <td>@task.TaskName</td>
+                    <td>@task.Priority</td>
+                    <td>@task.Description</td>
+                    <td>@task.TaskStatuses</td>
+                    <td>@task.StartDate.ToShortDateString()</td>
+                    <td>@task.EndDate.ToShortDateString()</td>
+                    <td><button type="button" class="form-control btn-primary" @onclick="@(() => EditModalPage(@task.Id))"><span class="oi oi-pencil"></span>&nbsp;&nbsp;Edit</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<TaskModal2 @ref="TaskModalRef" />
+<EditTaskModal @ref="EditTaskModalRef" />
+
+
+
+
+@code {
+    [Inject]
+    protected ITaskService taskService { get; set; }
+    [Inject]
+    protected IProjectService projectService { get; set; }
+    [Inject]
+    protected IUserService userService { get; set; }
+    protected IEnumerable<BlazorProject.Models.Task> TaskList { get; set; }
+    protected TaskModal2 TaskModalRef { get; set; }
+    protected EditTaskModal EditTaskModalRef { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        TaskList = taskService.GetTasks();
+        foreach (var task in TaskList)
+        {
+            var project = projectService.GetProjectById(task.ProjectId);
+            task.Project = project;
+            var user = userService.GetUserById(task.UserId);
+            task.ApplicationUser = user;
+        }
+    }
+
+    private void RedirectPage()
+    {
+        TaskModalRef.Show();
+    }
+
+    private void EditModalPage(int id)
+    {
+        //EditTaskModalRef.Show(id);
+    }
+}
