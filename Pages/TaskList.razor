@@ -1,5 +1,7 @@
-﻿@using BlazorProject.Models;
+﻿@page "/taskList"
+@using BlazorProject.Models;
 @using BlazorProject.Service.IService;
+@inject NavigationManager _navigationManager;
 <div class="job-status m-3 dropzone @dropClass" style="border:1px solid black;width:25%;background-color:lightgrey;overflow:hidden"
      ondragover="event.preventDefault();"
      ondragstart="event.dataTransfer.setData('', event.target.id);"
@@ -34,6 +36,8 @@
 @code {
     [Inject]
     protected ITaskService taskService { get; set; }
+    [Inject]
+    protected IEmailService emailService { get; set; }
     [CascadingParameter]
     TaskContainer Container { get; set; }
     [Parameter]
@@ -73,5 +77,6 @@
         var task = taskService.GetTaskById(Container.Payload.Id);
         task.TaskStatuses = ListStatus;
         taskService.UpdateTask(task);
+        // await emailService.SendEmailAsync();
     }
 }

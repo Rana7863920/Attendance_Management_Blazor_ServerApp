@@ -1,4 +1,4 @@
-﻿@*@using BlazorProject.Models;
+﻿@using BlazorProject.Models;
 @using BlazorProject.Service.IService;
 @using System.Globalization
 @inject NavigationManager _navigationManager
@@ -13,7 +13,7 @@
                 <h5 class="modal-title" style="margin-left:34%;" id="taskModalLabel">Add Your Task</h5>
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseModal"><span class="oi oi-circle-x"></span></button>
             </div>
-            <EditForm Model="@Task" OnValidSubmit="@SubmitForm">
+            <EditForm>
                 <div class="modal-body">
 
                     <div class="form-group m-2 p-2">
@@ -103,12 +103,11 @@
     [Inject]
     protected ITaskService taskService { get; set; }
     protected bool IsVisible { get; set; } = false;
-    protected Models.Task Task { get; set; } = new Models.Task();
     protected IEnumerable<ApplicationUser> UserList { get; set; }
     protected IEnumerable<Project> ProjectList { get; set; }
+    protected Models.Task Task { get; set; } = new Models.Task();
     protected DateTime DateValue { get; set; } = DateTime.Now.AddDays(-1);
     protected int TaskId { get; set; }
-    protected EditContext editContext1 { get; set; }
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
@@ -117,9 +116,8 @@
         Task = taskService.GetTaskById(TaskId);
     }
 
-    public void Show(int id)
+    public void Show()
     {
-        TaskId = id;
         IsVisible = true;
         StateHasChanged();
     }
@@ -128,23 +126,4 @@
     {
         IsVisible = false;
     }
-
-    public void SubmitForm(EditContext editContext)
-    {
-        bool formIsValid = editContext.Validate();
-        if (formIsValid)
-        {
-            bool Saved = taskService.CreateTask(Task);
-            if (Saved)
-            {
-                IsVisible = false;
-                Task.UserId = String.Empty;
-                Task.ProjectId = Int32.MinValue;
-                Task.TaskName = String.Empty;
-                Task.Description = String.Empty;
-            }
-            _navigationManager.NavigateTo("/task", forceLoad: true);
-        }
-    }
 }
-*@

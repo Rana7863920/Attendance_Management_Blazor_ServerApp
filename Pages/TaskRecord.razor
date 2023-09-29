@@ -41,7 +41,7 @@ else
                     <td>@task.TaskStatuses</td>
                     <td>@task.StartDate.ToShortDateString()</td>
                     <td>@task.EndDate.ToShortDateString()</td>
-                    <td><button type="button" class="form-control btn-primary" @onclick="@(() => EditModalPage(@task.Id))"><span class="oi oi-pencil"></span>&nbsp;&nbsp;Edit</button></td>
+                    <td><button type="button" class="form-control btn-primary" @onclick="@(() => EditModalPage())"><span class="oi oi-pencil"></span>&nbsp;&nbsp;Edit</button></td>
                 </tr>
             }
         </tbody>
@@ -50,9 +50,6 @@ else
 
 <TaskModal2 @ref="TaskModalRef" />
 <EditTaskModal @ref="EditTaskModalRef" />
-
-
-
 
 @code {
     [Inject]
@@ -82,8 +79,8 @@ else
         TaskModalRef.Show();
     }
 
-    private void EditModalPage(int id)
+    private void EditModalPage()
     {
-        //EditTaskModalRef.Show(id);
+        EditTaskModalRef.Show();
     }
 }
