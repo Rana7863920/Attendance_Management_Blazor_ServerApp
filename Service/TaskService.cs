@@ -1,6 +1,7 @@
 ﻿using BlazorProject.Data;
 using BlazorProject.Models;
 using BlazorProject.Service.IService;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorProject.Service
 {
@@ -13,17 +14,13 @@ namespace BlazorProject.Service
         }
         public List<Models.Task> GetTasks()
         {
-            var tasks = _context.Tasks.ToList();
+            var tasks = _context.Tasks.Include(t => t.ApplicationUser).Include(t => t.Project).ToList();
             return tasks;
         }
 
         public bool CreateTask(Models.Task task)
         {
             if(task == null) return false;
-            var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == task.UserId);
-            var project = _context.Projects.FirstOrDefault(p => p.Id == task.ProjectId);
-            task.ApplicationUser = user;
-            task.Project = project;
             _context.Tasks.Add(task);
             _context.SaveChanges(); 
             return true;
@@ -35,10 +32,21 @@ namespace BlazorProject.Service
             return task;
         }
 
-        public void UpdateTask(Models.Task task)
+        public bool UpdateTask(Models.Task task)
         {
+            if (task == null) return false;
             _context.Tasks.Update(task);
             _context.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteTask(int id)
+        {
+            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null) return false;
+            _context.Tasks.Remove(task);
+            _context.SaveChanges();
+            return true;
         }
     }
 }

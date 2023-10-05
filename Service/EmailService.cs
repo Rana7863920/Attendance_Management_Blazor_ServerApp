@@ -24,14 +24,16 @@ namespace BlazorProject.Service
             _httpContextAccessor = httpContextAccessor;
             _emailSender = emailSender;
         }
-        public async Task SendEmailAsync()
+        public async Task SendEmailAsync(Models.Task task, string oldTaskStatus)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            await _emailSender.SendEmailAsync(user.Email, "Task Status has been changed", "TaskStatus changed");
+            await _emailSender.SendEmailAsync(user.Email, "Task Status has been changed", 
+                "TaskStatus of task: " + task.TaskName.ToString() + " change from " + oldTaskStatus.ToString() + " to " 
+                + task.TaskStatuses.ToString() + " which was assigned to " + task.ApplicationUser.Name);
         }
     }
 }

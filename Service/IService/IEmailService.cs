@@ -2,6 +2,6 @@
 {
     public interface IEmailService
     {
-        public Task SendEmailAsync();
+        public Task SendEmailAsync(Models.Task Task, string oldTask);
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using BlazorProject.Models;
 @using BlazorProject.Service.IService;
 @using System.Globalization
-@inject NavigationManager _navigationManager
+@inherits TaskRecord
 @{
     var showClass = IsVisible ? "d-block" : "d-none";
 }
@@ -20,7 +20,7 @@
                         <div class="row">
                             <label style="margin-left:-2%;color:black;font-size:large">Assigned To</label>
                             <InputSelect @bind-Value="Task.UserId" class="p-lg-2">
-                                <option selected disabled class="text-center"></option>
+                                <option selected disabled class="text-center">-- Assigned To --</option>
                                 @foreach (var user in UserList)
                                 {
                                     <option value="@user.Id">@user.Name</option>
@@ -33,6 +33,7 @@
                             <div class="col-md-6 mr-2">
                                 <label style="font-size:large">Project</label>
                                 <InputSelect @bind-Value="Task.ProjectId" class="p-lg-2">
+                                    <option selected disabled class="text-center">-- Project --</option>
                                     @foreach (var project in ProjectList)
                                     {
                                         <option value="@project.Id">@project.Name</option>
@@ -55,6 +56,7 @@
                         <div class="row">
                             <label style="margin-left:-2%;font-size:large">Priority</label>
                             <InputSelect @bind-Value="Task.Priority" class="p-lg-2">
+                                <option selected disabled class="text-center">-- Priority --</option>
                                 @foreach (var priority in Enum.GetValues(typeof(Priority)))
                                 {
                                     <option value="@priority">@priority</option>
@@ -66,6 +68,7 @@
                         <div class="row">
                             <label style="margin-left:-2%;font-size:large">Status</label>
                             <InputSelect @bind-Value="Task.TaskStatuses" class="p-lg-2">
+                                <option selected disabled class="text-center">-- Task-Status --</option>
                                 @foreach (var taskStatus in Enum.GetValues(typeof(TaskStatuses)))
                                 {
                                     <option value="@taskStatus">@taskStatus</option>
@@ -77,18 +80,22 @@
                         <div class="row">
                             <div class="col-md-6 mr-2">
                                 <label for="startDate" style="font-size:large">Start Date</label>
-                                <InputDate @bind-Value="DateValue" min="@DateValue.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+                                <InputDate @bind-Value="Task.StartDate" min="@MinStartDate.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
                             </div>
                             <div class="col-md-6 ml-2">
                                 <label for="endDate" style="font-size:large">End Date</label>
-                                <InputDate @bind-Value="Task.EndDate" min="@DateValue.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+                                <InputDate @bind-Value="Task.EndDate" min="@MinEndDate.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
-                    <button type="submit" class="btn btn-primary" style="background-color:darkblue;" value="Save">Save</button>
+                    <div class="col-5 m-auto">
+                        <button type="button" class="btn btn-secondary form-control" @onclick="CloseModal">Close</button>
+                    </div>
+                    <div class="col-5 m-auto">
+                        <button type="submit" class="btn btn-primary form-control" style="background-color:darkblue;" value="Save">Save</button>
+                    </div>
                 </div>
             </EditForm>
         </div>
@@ -106,7 +113,11 @@
     protected Models.Task Task { get; set; } = new Models.Task();
     protected IEnumerable<ApplicationUser> UserList { get; set; }
     protected IEnumerable<Project> ProjectList { get; set; }
-    protected DateTime DateValue { get; set; } = DateTime.Now.AddDays(-1);
+    protected DateTime MinStartDate { get; set; } = DateTime.Now;
+    protected DateTime MinEndDate { get; set; } = DateTime.Now;
+    protected IEnumerable<Models.Task> TaskList { get; set; }
+    [Parameter]
+    public EventCallback<IEnumerable<Models.Task>> OnCreateTask { get; set; }
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
@@ -127,21 +138,25 @@
         IsVisible = false;
     }
 
+    public void GetTasks()
+    {
+        TaskList = taskService.GetTasks();
+    }
+
     public void SubmitForm(EditContext editContext)
     {
         bool formIsValid = editContext.Validate();
         if (formIsValid)
         {
             bool Saved = taskService.CreateTask(Task);
-            if (Saved)
-            {
-                IsVisible = false;
-                Task.UserId = String.Empty;
-                Task.ProjectId = Int32.MinValue;
-                Task.TaskName = String.Empty;
-                Task.Description = String.Empty;
-            }
-            _navigationManager.NavigateTo("/task", forceLoad: true);
+            IsVisible = false;
+            CreateTaskHandler();
         }
+    }
+
+    public async System.Threading.Tasks.Task CreateTaskHandler()
+    {
+        GetTasks();
+        await OnCreateTask.InvokeAsync(TaskList);
     }
 }

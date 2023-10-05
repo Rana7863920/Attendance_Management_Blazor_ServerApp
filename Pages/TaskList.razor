@@ -1,7 +1,6 @@
 ﻿@page "/taskList"
 @using BlazorProject.Models;
 @using BlazorProject.Service.IService;
-@inject NavigationManager _navigationManager;
 <div class="job-status m-3 dropzone @dropClass" style="border:1px solid black;width:25%;background-color:lightgrey;overflow:hidden"
      ondragover="event.preventDefault();"
      ondragstart="event.dataTransfer.setData('', event.target.id);"
@@ -28,10 +27,11 @@
     <ul style="list-style:none;margin-left:-12%;background-color:@BgColor2">
         @foreach (var task in Tasks)
         {
-            <Task TaskModel="task" />
+            <Task TaskModel="@task" />
         }
     </ul>
 </div>
+
 
 @code {
     [Inject]
@@ -73,10 +73,11 @@
     {
         dropClass = "";
         if (AllowedStatuses != null && !AllowedStatuses.Contains(Container.Payload.TaskStatuses)) return;
+        var oldTaskStatus = Container.Payload.TaskStatuses.ToString();
         await Container.UpdateJobAsync(ListStatus);
         var task = taskService.GetTaskById(Container.Payload.Id);
         task.TaskStatuses = ListStatus;
         taskService.UpdateTask(task);
-        // await emailService.SendEmailAsync();
+        // await emailService.SendEmailAsync(task, oldTaskStatus);
     }
 }

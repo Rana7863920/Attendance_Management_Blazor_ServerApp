@@ -7,6 +7,7 @@ namespace BlazorProject.Service.IService
         public List<Models.Task> GetTasks();
         public bool CreateTask(Models.Task task);
         public Models.Task GetTaskById(int id);
-        public void UpdateTask(Models.Task task);
+        public bool UpdateTask(Models.Task task);
+        public bool DeleteTask(int id);
     }
 }

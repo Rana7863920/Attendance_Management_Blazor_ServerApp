@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/DeleteTaskModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVsZXRlVGFza01vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/EditTaskModal.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFRhc2tNb2RhbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
