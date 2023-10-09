@@ -15,5 +15,14 @@ namespace BlazorProject.Data
         public DbSet<UserAttendance> UserAttendances { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Models.Task> Tasks { get; set; }
+        public DbSet<LeaveType> LeaveTypes { get; set; }
+        public DbSet<LeaveBalance> LeaveBalances { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LeaveBalance>()
+                .HasKey(lb => new { lb.LeaveTypeId, lb.ApplicationUserId });
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

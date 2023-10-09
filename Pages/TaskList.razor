@@ -7,19 +7,23 @@
      @ondrop="HandleDrop"
      @ondragenter="HandleDragEnter"
      @ondragleave="HandleDragLeave">
-    @if (ListStatus.Equals(TaskStatuses.Backlog)){
+    @if (ListStatus.Equals(TaskStatuses.Backlog))
+    {
         BgColor = "red";
         BgColor2 = "orangered";
     }
-    else if (ListStatus.Equals(TaskStatuses.Development)){
+    else if (ListStatus.Equals(TaskStatuses.Development))
+    {
         BgColor = "lightseagreen";
         BgColor2 = "lightseagreen";
     }
-    else if (ListStatus.Equals(TaskStatuses.Testing)){
+    else if (ListStatus.Equals(TaskStatuses.Testing))
+    {
         BgColor = "darkorange";
         BgColor2 = "orange";
     }
-    else{
+    else
+    {
         BgColor = "Green";
         BgColor2 = "lightgreen";
     }
@@ -27,11 +31,13 @@
     <ul style="list-style:none;margin-left:-12%;background-color:@BgColor2">
         @foreach (var task in Tasks)
         {
-            <Task TaskModel="@task" />
+            <div @onclick="@(() => EditModalPage(task.Id))">
+                <Task TaskModel="@task" />
+            </div>
         }
     </ul>
 </div>
-
+<EditInDragDrop @ref="EditInDragDropRef" OnUpateTask="HandleUpdateTask"/>
 
 @code {
     [Inject]
@@ -48,6 +54,7 @@
     protected string BgColor { get; set; }
     protected string BgColor2 { get; set; }
     string dropClass = "";
+    protected EditInDragDrop EditInDragDropRef { get; set; }
     protected override void OnParametersSet()
     {
         Tasks.Clear();
@@ -79,5 +86,18 @@
         task.TaskStatuses = ListStatus;
         taskService.UpdateTask(task);
         // await emailService.SendEmailAsync(task, oldTaskStatus);
+    }
+
+    private void EditModalPage(int id)
+    {
+        EditInDragDropRef.Show(id);
+    }
+
+    private void HandleUpdateTask(List<Models.Task> taskList)
+    {
+        Tasks = taskList;
+        Tasks.Clear();
+        Tasks.AddRange(Container.Tasks.Where(x => x.TaskStatuses == ListStatus));
+        StateHasChanged();
     }
 }

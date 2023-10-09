@@ -26,7 +26,7 @@ namespace BlazorProject.Service
         }
         public async Task SendEmailAsync(Models.Task task, string oldTaskStatus)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

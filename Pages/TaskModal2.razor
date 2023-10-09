@@ -138,7 +138,7 @@
         IsVisible = false;
     }
 
-    public void GetTasks()
+    new public void GetTasks()
     {
         TaskList = taskService.GetTasks();
     }
@@ -151,6 +151,7 @@
             bool Saved = taskService.CreateTask(Task);
             IsVisible = false;
             CreateTaskHandler();
+            Task = new Models.Task();
         }
     }
 

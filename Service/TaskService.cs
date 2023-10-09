@@ -28,7 +28,7 @@ namespace BlazorProject.Service
 
         public Models.Task GetTaskById(int id)
         {
-            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            var task = _context.Tasks.Include(t => t.Project).Include(t => t.ApplicationUser).FirstOrDefault(t => t.Id == id);
             return task;
         }
 

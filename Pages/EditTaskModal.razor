@@ -118,11 +118,12 @@ else
     protected IEnumerable<ApplicationUser> UserList { get; set; }
     protected IEnumerable<Project> ProjectList { get; set; }
     protected Models.Task Task { get; set; } = new Models.Task();
+    protected Models.Task Task2 { get; set; } = new Models.Task();
     protected DateTime MinStartDate { get; set; } = DateTime.Now;
     protected DateTime MinEndDate { get; set; } = DateTime.Now;
-    protected IEnumerable<Models.Task> TaskList {get; set;}
+    protected bool IsUpdated { get; set; } = false;
     [Parameter]
-    public EventCallback<IEnumerable<Models.Task>> OnUpateTask { get; set; }
+    public EventCallback<bool> OnUpateTask { get; set; }
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
@@ -134,17 +135,28 @@ else
     {
         IsVisible = true;
         Task = taskService.GetTaskById(id);
+        Task2.TaskName = Task.TaskName;
+        Task2.ApplicationUser = Task.ApplicationUser;
+        Task2.Project = Task.Project;
+        Task2.Description = Task.Description;
+        Task2.Priority = Task.Priority;
+        Task2.TaskStatuses = Task.TaskStatuses;
+        Task2.StartDate = Task.StartDate;
+        Task2.EndDate = Task.EndDate;
         StateHasChanged();
     }
 
     public void CloseModal()
     {
         IsVisible = false;
-    }
-
-    public void GetTasks()
-    {
-        TaskList = taskService.GetTasks();
+        Task.TaskName = Task2.TaskName;
+        Task.ApplicationUser.Name = Task2.ApplicationUser.Name;
+        Task.Project.Id = Task2.Project.Id;
+        Task.Description = Task2.Description;
+        Task.Priority = Task2.Priority;
+        Task.TaskStatuses = Task2.TaskStatuses;
+        Task.StartDate = Task2.StartDate;
+        Task.EndDate = Task2.EndDate;
     }
 
     public void SubmitForm(EditContext editContext)
@@ -154,14 +166,14 @@ else
         {
             taskService.UpdateTask(Task);
             IsVisible = false;
+            IsUpdated = true;
             UpdateTaskHandler();
         }
     }
 
     public async System.Threading.Tasks.Task UpdateTaskHandler()
     {
-        GetTasks();
-        await OnUpateTask.InvokeAsync(TaskList);
+        await OnUpateTask.InvokeAsync(IsUpdated);
     }
 }
 

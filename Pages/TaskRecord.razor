@@ -92,10 +92,10 @@
         DeleteId = id;
     }
 
-    private void HandleUpdateTask(IEnumerable<Models.Task> taskList)
+    private void HandleUpdateTask(bool isUpdated)
     {
-        TaskList = taskList;
-        StateHasChanged();
+        if(isUpdated)
+            StateHasChanged();
     }
 
     private void HandleCreateTask(IEnumerable<Models.Task> taskList)

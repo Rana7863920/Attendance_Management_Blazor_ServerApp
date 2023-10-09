@@ -32,6 +32,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVsZXRlVGFza01vZGFsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/EditInDragDrop.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdEluRHJhZ0Ryb3AucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/EditTaskModal.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFRhc2tNb2RhbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -42,6 +46,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Leave Type/CreateLeaveTypeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhdmUgVHlwZVxDcmVhdGVMZWF2ZVR5cGVNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Leave Type/DeleteLeaveTypeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhdmUgVHlwZVxEZWxldGVMZWF2ZVR5cGVNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Leave Type/EditLeaveTypeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhdmUgVHlwZVxFZGl0TGVhdmVUeXBlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Leave Type/LeaveType.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhdmUgVHlwZVxMZWF2ZVR5cGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Task.razor]
