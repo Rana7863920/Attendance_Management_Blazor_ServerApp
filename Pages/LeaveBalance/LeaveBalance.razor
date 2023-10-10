@@ -1,0 +1,45 @@
+﻿@page "/leaveBalance"
+@using BlazorProject.Service.IService
+<div class="row">
+    <div class="col-md-9">
+        <h3 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Leave Balance</h3>
+    </div>
+</div>
+<table class="table table-bordered table-striped table-active m-2 p-2">
+    <thead>
+        <tr>
+            <th>Leave Type</th>
+            <th>Granted</th>
+            <th>Used</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var leave in LeaveManagementList)
+        {
+            <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                <td>@leave.LeaveType.Name</td>
+                <td>@leave.Granted</td>
+                <td>@leave.Used</td>
+                <td>@leave.Balance</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Inject]
+    protected ILeaveBalanceService leaveBalanceService { get; set; }
+    public IEnumerable<Models.LeaveBalance> LeaveManagementList { get; set; }
+
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        GetLeaveBalanceOfUser();
+    }
+
+    public void GetLeaveBalanceOfUser()
+    {
+        LeaveManagementList = leaveBalanceService.GetLeaveBalanceOfUser();
+    }
+}

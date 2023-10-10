@@ -1,0 +1,123 @@
+﻿@using BlazorProject.Service.IService
+@using BlazorProject.Models
+@inherits LeaveManagement
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+<div class="modal fade show @showClass" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:darkblue;color:white">
+                <h5 class="modal-title" style="margin-left:34%;" id="taskModalLabel">Add Leave</h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseModal"><span class="oi oi-circle-x"></span></button>
+            </div>
+            <EditForm Model="@LeaveBalance" OnValidSubmit="@SubmitForm">
+                <div class="modal-body">
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <label style="margin-left:-2%;color:black;font-size:large">User List</label>
+                            <InputSelect disabled @bind-Value="LeaveBalance.ApplicationUserId" class="p-lg-2">
+                                <option selected disabled class="text-center">-- User List --</option>
+                                @foreach (var user in UserList)
+                                {
+                                    <option value="@user.Id">@user.Name</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <label style="margin-left:-2%;color:black;font-size:large">LeaveType List</label>
+                            <InputSelect disabled @bind-Value="LeaveBalance.LeaveTypeId" class="p-lg-2">
+                                <option selected disabled class="text-center">-- LeaveType List --</option>
+                                @foreach (var leaveType in LeaveTypeList)
+                                {
+                                    <option disabled value="@leaveType.Id">@leaveType.Name</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group m-2 p-2">
+                        <div class="row">
+                            <div class="col-5">
+                                <label style="font-size:large">Granted</label>
+                            </div>
+                            <div class="col-7">
+                                <InputNumber @bind-Value="LeaveBalance.Granted" class="form-control" placeholder="Granted" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-5 m-auto">
+                        <button type="button" class="btn btn-secondary form-control" @onclick="CloseModal">Close</button>
+                    </div>
+                    <div class="col-5 m-auto">
+                        <button type="submit" class="btn btn-primary form-control" style="background-color:darkblue;" value="Save">Save</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject]
+    protected ILeaveBalanceService leaveBalanceService { get; set; }
+    [Inject]
+    protected IUserService userService { get; set; }
+    [Inject]
+    protected ILeaveTypeService leaveTypeService { get; set; }
+    protected Models.LeaveBalance LeaveBalance { get; set; } = new Models.LeaveBalance();
+    protected Models.LeaveBalance LeaveBalance2 { get; set; } = new Models.LeaveBalance();
+    protected IEnumerable<Models.LeaveBalance> LeaveManagementList { get; set; }
+    protected IEnumerable<ApplicationUser> UserList { get; set; }
+    protected IEnumerable<Models.LeaveType> LeaveTypeList { get; set; }
+    protected bool IsUpdated { get; set; } = false;
+    protected bool IsVisible { get; set; } = false;
+    [Parameter]
+    public EventCallback<bool> OnUpdateLeaveManagement { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        UserList = userService.GetAllUsers();
+        LeaveTypeList = leaveTypeService.GetLeaveTypes();
+    }
+
+    public void Show(string applicationUserId, int leaveTypeId)
+    {
+        IsVisible = true;
+        LeaveBalance = leaveBalanceService.GetLeaveManagementById(applicationUserId, leaveTypeId);
+        LeaveBalance2.ApplicationUser = LeaveBalance.ApplicationUser;
+        LeaveBalance2.LeaveType = LeaveBalance.LeaveType;
+        LeaveBalance2.Granted = LeaveBalance.Granted;
+        LeaveBalance2.Used = LeaveBalance.Used;
+        LeaveBalance2.Balance = LeaveBalance.Balance;
+        StateHasChanged();
+    }
+
+    public void CloseModal()
+    {
+        IsVisible = false;
+    }
+
+    public void SubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            bool Updated = leaveBalanceService.UpdateLeaveManagement(LeaveBalance);
+            if (Updated)
+            {
+                IsVisible = false;
+                IsUpdated = true;
+                UpdateLeaveManagementHandler();
+            }
+        }
+    }
+
+    public async System.Threading.Tasks.Task UpdateLeaveManagementHandler()
+    {
+        await OnUpdateLeaveManagement.InvokeAsync(IsUpdated);
+    }
+}
