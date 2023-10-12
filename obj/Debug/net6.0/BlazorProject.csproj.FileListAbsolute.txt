@@ -254,6 +254,10 @@ D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\BlazorProject.pdb
 D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\BlazorProject.genruntimeconfig.cache
 D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\ref\BlazorProject.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\scopedcss\projectbundle\BlazorProject.bundle.scp.css
+D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\BlazorBootstrap.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.AspNetCore.Components.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.AspNetCore.Components.Forms.dll
@@ -261,12 +265,4 @@ D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.AspNetCore.Comp
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Microsoft.JSInterop.dll
-D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Syncfusion.Licensing.dll
 D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\System.IO.Pipelines.dll
-D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
-D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
-D:\Blazor\BlazorProject\BlazorProject\obj\Debug\net6.0\scopedcss\projectbundle\BlazorProject.bundle.scp.css
-D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Syncfusion.Blazor.dll
-D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Syncfusion.ExcelExport.Net.dll
-D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\Syncfusion.PdfExport.Net.dll
-D:\Blazor\BlazorProject\BlazorProject\bin\Debug\net6.0\BlazorBootstrap.dll

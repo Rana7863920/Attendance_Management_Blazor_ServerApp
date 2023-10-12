@@ -1,5 +1,6 @@
 ﻿@using BlazorProject.Service.IService
 @using BlazorProject.Models
+@using BlazorBootstrap
 @inherits LeaveManagement
 @{
     var showClass = IsVisible ? "d-block" : "d-none";
@@ -43,7 +44,7 @@
                                 <label style="font-size:large">Granted</label>
                             </div>
                             <div class="col-7">
-                                <InputNumber @bind-Value="LeaveBalance.Granted" class="form-control" placeholder="Granted" />
+                                <InputNumber @bind-Value="LeaveBalance.Granted" min="1" class="form-control" placeholder="Granted" />
                             </div>
                         </div>
                     </div>
@@ -60,6 +61,7 @@
         </div>
     </div>
 </div>
+<Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
 
 @code {
     [Inject]
@@ -75,6 +77,14 @@
     protected bool IsVisible { get; set; } = false;
     [Parameter]
     public EventCallback<IEnumerable<Models.LeaveBalance>> OnCreateLeaveManagement { get; set; }
+    List<ToastMessage> messages = new List<ToastMessage>();
+    private ToastMessage CreateToastMessage(ToastType toastType)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Message = $"Leave you are assigning already assgined to this user... Please Check...",
+            AutoHide = true,
+        };
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
@@ -109,6 +119,10 @@
                 IsVisible = false;
                 CreateLeaveManagementHandler();
                 LeaveBalance = new Models.LeaveBalance();
+            }
+            else
+            {
+                messages.Add(CreateToastMessage(ToastType.Danger));
             }
         }
     }

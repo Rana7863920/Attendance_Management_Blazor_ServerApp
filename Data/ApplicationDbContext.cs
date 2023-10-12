@@ -24,5 +24,6 @@ namespace BlazorProject.Data
 
             base.OnModelCreating(modelBuilder);
         }
+        public DbSet<Leave> Leaves { get; set; }
     }
 }

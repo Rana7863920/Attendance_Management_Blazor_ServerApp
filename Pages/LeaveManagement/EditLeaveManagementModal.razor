@@ -43,7 +43,7 @@
                                 <label style="font-size:large">Granted</label>
                             </div>
                             <div class="col-7">
-                                <InputNumber @bind-Value="LeaveBalance.Granted" class="form-control" placeholder="Granted" />
+                                <InputNumber @bind-Value="LeaveBalance.Granted" min="1" class="form-control" placeholder="Granted" />
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,11 @@
     public void CloseModal()
     {
         IsVisible = false;
+        LeaveBalance.ApplicationUser = LeaveBalance2.ApplicationUser;
+        LeaveBalance.LeaveType = LeaveBalance2.LeaveType;
+        LeaveBalance.Granted = LeaveBalance2.Granted;
+        LeaveBalance.Used = LeaveBalance2.Used;
+        LeaveBalance.Balance = LeaveBalance2.Balance;
     }
 
     public void SubmitForm(EditContext editContext)

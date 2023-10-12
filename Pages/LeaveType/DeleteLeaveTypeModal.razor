@@ -1,4 +1,5 @@
 ﻿@using BlazorProject.Service.IService;
+@using BlazorBootstrap
 @inherits LeaveType
 @{
     var showClass = IsVisible ? "d-block" : "d-none";
@@ -15,7 +16,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-5 m-auto">
-                    <button type="submit" class="btn btn-primary form-control bg-danger" value="Delete" @onclick="DeleteTask">Delete</button>
+                    <button type="submit" class="btn btn-primary form-control bg-danger" value="Delete" @onclick="(() => DeleteTask(ToastType.Danger))">Delete</button>
                 </div>
                 <div class="col-5 m-auto">
                     <button type="button" class="btn btn-secondary form-control" @onclick="CloseModal">Cancel</button>
@@ -24,6 +25,7 @@
         </div>
     </div>
 </div>
+<Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
 
 @code {
     [Inject]
@@ -34,6 +36,14 @@
     protected IEnumerable<Models.LeaveType> LeaveTypeList { get; set; }
     [Parameter]
     public EventCallback<IEnumerable<Models.LeaveType>> OnDeleteLeaveType { get; set; }
+    List<ToastMessage> messages = new List<ToastMessage>();
+    private ToastMessage CreateToastMessage(ToastType toastType)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Message = $"Leave Type Deleted Successfully",
+            AutoHide = true,
+        };
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
@@ -56,11 +66,12 @@
         LeaveTypeList = leaveTypeService.GetLeaveTypes();
     }
 
-    public void DeleteTask()
+    public void DeleteTask(ToastType toastType)
     {
         bool isDeleted = leaveTypeService.DeleteLeaveType(LeaveTypeId);
         if (isDeleted)
         {
+            messages.Add(CreateToastMessage(toastType));
             IsVisible = false;
             DelteLeaveTypeHandler();
         }
