@@ -28,6 +28,7 @@ namespace BlazorProject.Service
                         FirstOrDefault(lb => lb.ApplicationUserId == leaveBalance.ApplicationUserId && lb.LeaveTypeId == leaveBalance.LeaveTypeId);
             if (leave != null) return false;
             if (leaveBalance == null) return false;
+            leaveBalance.Balance = leaveBalance.Granted;
             _context.LeaveBalances.Add(leaveBalance);
             _context.SaveChanges();
             return true;

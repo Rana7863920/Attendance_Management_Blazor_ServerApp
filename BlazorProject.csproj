@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Images\DisplayImages\" />
   </ItemGroup>
 
 </Project>

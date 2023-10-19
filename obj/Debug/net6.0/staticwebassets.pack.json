@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\BlazorProject.bundle.scp.css"
     },
     {
+      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\B_Tech_ CSE Batch 2018 (07-05-2020)-pages-deleted.pdf",
+      "PackagePath": "staticwebassets\\Images\\B_Tech_ CSE Batch 2018 (07-05-2020)-pages-deleted.pdf"
+    },
+    {
       "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\CS.jpg",
       "PackagePath": "staticwebassets\\Images\\CS.jpg"
     },
@@ -13,8 +17,8 @@
       "PackagePath": "staticwebassets\\Images\\Date - 09-10-2023.txt"
     },
     {
-      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\OrderConfirmation.jpg",
-      "PackagePath": "staticwebassets\\Images\\OrderConfirmation.jpg"
+      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\mouse2.jpg",
+      "PackagePath": "staticwebassets\\Images\\mouse2.jpg"
     },
     {
       "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\css\\bootstrap\\bootstrap.min.css",

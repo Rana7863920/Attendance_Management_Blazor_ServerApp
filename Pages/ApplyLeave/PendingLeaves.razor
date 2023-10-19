@@ -1,0 +1,78 @@
+﻿@using BlazorProject.Service.IService
+@using System.Security.Policy;
+@if(PendingLeaveList == null)
+{
+    <h2 class="text-center text-danger">No Data Found...</h2>
+}
+else
+{
+    <table class="table table-bordered table-striped table-active m-2 p-2">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Contact</th>
+                <th>Reason</th>
+                <th>File</th>
+                <th>To</th>
+                <th>CC</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leave in PendingLeaveList)
+            {
+                <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    <td>@leave.LeaveBalance.ApplicationUser.Name</td>
+                    <td>@leave.LeaveBalance.LeaveType.Name</td>
+                    <td>@leave.StartDate.ToShortDateString()</td>
+                    <td>@leave.EndDate.ToShortDateString()</td>
+                    <td>@leave.Contact</td>
+                    <td>@leave.Reason</td>
+                    <td>
+                        <button class="btn-primary" @onclick="(() => Preview(leave))">Preview</button>
+                    </td>
+                    <td>@leave.To</td>
+                    <td>@leave.CC</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Extension == "image/jpeg")
+    {
+        <img src="@DataURL" alt="File Not Found" style="height:70vh;width:70vw" />
+    }
+    else if (Extension == "text/plain")
+    {
+        <iframe src="@DataURL" style="height:70vh;width:70vw"></iframe>
+    }
+    else if (Extension == "application/pdf")
+    {
+        <iframe src="@DataURL" style="height:70vh;width:70vw"></iframe>
+    }
+}
+
+@code {
+    [Inject]
+    protected ILeaveService leaveService { get; set; }
+    protected IEnumerable<Models.Leave> PendingLeaveList { get; set; }
+    protected string Extension { get; set; }
+    protected string DataURL { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetPendingLeaveList();
+    }
+
+    public void GetPendingLeaveList()
+    {
+        PendingLeaveList = leaveService.GetUserPendingLeaves();
+    }
+
+    public void Preview(Models.Leave file)
+    {
+        DataURL = string.Format($"data:{file.FileExtension};base64,{file.File}");
+        Extension = file.FileExtension;
+    }
+}

@@ -16,6 +16,7 @@ namespace BlazorProject.Models
         public string CC { get; set; }
         public string Status { get; set; }
         public string File { get; set; }
+        public string FileExtension { get; set; }
         public string ApplicationUserId { get; set; }
         public int LeaveTypeId { get; set; }
         [ForeignKey("LeaveTypeId, ApplicationUserId")]

@@ -24,6 +24,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwbHlMZWF2ZVxBcHBseUxlYXZlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/ApplyLeave/LeaveHistory.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwbHlMZWF2ZVxMZWF2ZUhpc3RvcnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/ApplyLeave/PendingLeaves.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwbHlMZWF2ZVxQZW5kaW5nTGVhdmVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Attendance/Attendance.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXR0ZW5kYW5jZVxBdHRlbmRhbmNlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

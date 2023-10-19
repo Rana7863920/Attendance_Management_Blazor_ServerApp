@@ -1,0 +1,55 @@
+﻿@using BlazorProject.Service.IService
+@if (UserLeaveList == null)
+{
+    <h2 class="text-center text-danger">No Data Found...</h2>
+}
+else
+{
+    <table class="table table-bordered table-striped table-active m-2 p-2">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Contact</th>
+                <th>Reason</th>
+                <th>To</th>
+                <th>CC</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leave in UserLeaveList)
+            {
+                <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    <td>@leave.LeaveBalance.ApplicationUser.Name</td>
+                    <td>@leave.LeaveBalance.LeaveType.Name</td>
+                    <td>@leave.StartDate.ToShortDateString()</td>
+                    <td>@leave.EndDate.ToShortDateString()</td>
+                    <td>@leave.Contact</td>
+                    <td>@leave.Reason</td>
+                    <td>@leave.To</td>
+                    <td>@leave.CC</td>
+                    <td>@leave.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Inject]
+    protected ILeaveService leaveService { get; set; }
+    protected IEnumerable<Models.Leave> UserLeaveList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetUserLeaveList();
+    }
+
+    public void GetUserLeaveList()
+    {
+        UserLeaveList = leaveService.GetUserLeaves();
+    }
+}

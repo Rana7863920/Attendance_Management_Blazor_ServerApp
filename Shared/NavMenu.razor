@@ -1,4 +1,5 @@
 ﻿@using BlazorProject.Service.IService
+@using BlazorBootstrap
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -25,7 +26,7 @@
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="taskRecord">
+                <NavLink class="nav-link" href="taskRecord" @onclick="async () => await ShowSpinnerAsync(SpinnerColor.Primary)">
                     <span class="oi oi-document" aria-hidden="true"></span> Task
                 </NavLink>
             </div>
@@ -39,21 +40,21 @@
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="leaveType">
+                <NavLink class="nav-link" href="leaveType" @onclick="async () => await ShowSpinnerAsync(SpinnerColor.Primary)">
                     <span class="oi oi-layers" aria-hidden="true"></span> Leave Type
                 </NavLink>
             </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="leaveManagement">
+                <NavLink class="nav-link" href="leaveManagement" @onclick="async () => await ShowSpinnerAsync(SpinnerColor.Primary)">
                     <span class="oi oi-medical-cross" aria-hidden="true"></span> Leave Management
                 </NavLink>
             </div>
         </AuthorizeView>
         <AuthorizeView Roles="Individual User">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="leaveBalance">
+                <NavLink class="nav-link" href="leaveBalance" @onclick="async () => await ShowSpinnerAsync(SpinnerColor.Primary)">
                     <span class="oi oi-medical-cross" aria-hidden="true"></span> Leave Balance
                 </NavLink>
             </div>
@@ -74,6 +75,7 @@
         </AuthorizeView>
     </nav>
 </div>
+<Preload />
 
 @code {
     private bool collapseNavMenu = true;
@@ -81,14 +83,26 @@
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
     [Inject]
     protected IUserService userService { get; set; }
+    [Inject]
+    protected PreloadService PreloadService { get; set; }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 
-    protected void GetDuration()
+    protected async Task GetDuration()
     {
+        await ShowSpinnerAsync(SpinnerColor.Primary);
         userService.GetDuration();
+    }
+
+    private async Task ShowSpinnerAsync(SpinnerColor spinnerColor)
+    {
+        PreloadService.Show(spinnerColor);
+
+        await Task.Delay(500); // call the service/api
+
+        PreloadService.Hide();
     }
 }
