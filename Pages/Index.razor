@@ -28,7 +28,7 @@
             <div class="col-md-4">
                 @if (TimeIn != null)
                 {
-                    <button type="button" class="form-control btn-danger btn-lg rounded text-white" style="text-shadow: 2px 2px 4px #000000;" @onclick="() => PunchInOut()">@Punch</button>
+                    <button type="button" class="form-control btn-danger btn-lg rounded text-white" style="background-color:red;text-shadow: 2px 2px 4px #000000;" @onclick="() => PunchInOut()">@Punch</button>
                 }
                 else
                 {
@@ -43,6 +43,8 @@
 @code {
     [Inject]
     protected IUserService userService { get; set; }
+    [Inject]
+    protected IAttendanceStatusService attendanceStatus { get; set; }
     protected string UserName { get; set; }
     protected Char Letter { get; set; }
     protected string Punch { get; set; }
@@ -84,6 +86,7 @@
             Punch = "Punch Out";
             User = userService.PunchIn();
             TimeIn = User.TimeIn.ToString("hh:mm tt");
+            attendanceStatus.AddAttendanceStatus();
         }
         else
         {

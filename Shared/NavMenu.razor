@@ -34,7 +34,7 @@
         <AuthorizeView Roles="Admin,Individual User">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="taskStatus">
-                    <span class="oi oi-graph" aria-hidden="true"></span> Task Status
+                    <span class="oi oi-grid-four-up" aria-hidden="true"></span> Task Status
                 </NavLink>
             </div>
         </AuthorizeView>
@@ -68,8 +68,22 @@
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="leaveNotification">
+                <NavLink class="nav-link" href="leaveNotification" @onclick="async () => await ShowSpinnerAsync(SpinnerColor.Primary)">
                     <span class="oi oi-bell" aria-hidden="true"></span> Leave Notification
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="attendanceStatusLineChart">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Attendance Status
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="attendanceStatusPieChart">
+                    <span class="oi oi-pie-chart" aria-hidden="true"></span> Today Attendance Status
                 </NavLink>
             </div>
         </AuthorizeView>

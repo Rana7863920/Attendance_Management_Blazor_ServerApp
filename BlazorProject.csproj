@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Images\DisplayImages\**" />
+    <Content Remove="wwwroot\Images\DisplayImages\**" />
+    <EmbeddedResource Remove="wwwroot\Images\DisplayImages\**" />
+    <None Remove="wwwroot\Images\DisplayImages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazor.Bootstrap" Version="1.10.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.21" />
@@ -22,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\Images\DisplayImages\" />
   </ItemGroup>
 
 </Project>

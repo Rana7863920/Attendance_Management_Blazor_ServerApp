@@ -1,0 +1,255 @@
+﻿@page "/attendanceStatusLineChart"
+@using BlazorProject.Service.IService;
+@using BlazorBootstrap;
+
+
+<h3>Attendance Status (Line Chart)</h3>
+<EditForm Model="@classificationCriteria" OnValidSubmit="@SubmitForm">
+    <div class="row">
+        <div class="col-md-5">
+            <InputSelect @bind-Value="classificationCriteria" class="p-lg-2">
+                <option selected disabled class="text-center">-- Data Classification Criteria --</option>
+                @foreach (var criteria in Enum.GetValues(typeof(ClassificationCriteria)))
+                {
+                    <option value="@criteria">@criteria</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="col-md-5" style="margin-left:-20%">
+            <button type="submit" class="btn btn-primary" style="background-color:darkblue;" value="Save">Submit</button>
+        </div>
+    </div>
+</EditForm>
+
+<LineChart @ref="lineChart" Width="1000" Class="mb-4" />
+
+@code {
+    [Inject]
+    protected IAttendanceStatusService attendanceStatusService { get; set; }
+    private LineChart lineChart = default!;
+    private LineChartOptions lineChartOptions = default!;
+    private ChartData chartData = default!;
+    public enum ClassificationCriteria
+    {
+        Day,
+        Monthly
+    }
+    protected ClassificationCriteria classificationCriteria { get; set; }
+
+    private int datasetsCount;
+    private int labelsCount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        chartData = new ChartData { Labels = GetDefaultDataLabels(), Datasets = GetDefaultDataSets(1) };
+        lineChartOptions = new() { Responsive = true, Interaction = new Interaction { Mode = InteractionMode.Index } };
+
+        lineChartOptions.Plugins.Title.Text = "Attendance Status - Line Chart";
+        lineChartOptions.Plugins.Title.Display = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await lineChart.InitializeAsync(chartData, lineChartOptions);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    //Day DataSets and DataLabels
+
+    private List<IChartDataset> GetDefaultDataSets(int numberOfDatasets)
+    {
+        var datasets = new List<IChartDataset>();
+
+        for (var index = 0; index < numberOfDatasets; index++)
+        {
+            datasets.Add(GetRandomLineChartDataset());
+        }
+
+        return datasets;
+    }
+
+    private LineChartDataset GetRandomLineChartDataset()
+    {
+        var c = ColorBuilder.CategoricalTwelveColors[datasetsCount].ToColor();
+
+        datasetsCount += 1;
+
+        return new LineChartDataset
+            {
+                Label = $"Punched In Users",
+                Data = GetRandomData(),
+                BackgroundColor = new List<string> { c.ToRgbString() },
+                BorderColor = new List<string> { c.ToRgbString() },
+                BorderWidth = new List<double> { 2 },
+                HoverBorderWidth = new List<double> { 4 },
+                PointBackgroundColor = new List<string> { c.ToRgbString() },
+                PointRadius = new List<int> { 0 }, // hide points
+                PointHoverRadius = new List<int> { 4 }
+            };
+    }
+
+    private List<double> GetRandomData()
+    {
+        var data = new List<double>();
+        var PunchedInUser = attendanceStatusService.GetAttendanceStatuses();
+        foreach (var punchedInUser in PunchedInUser)
+        {
+            data.Add(punchedInUser.PunchedInUsers);
+        }
+
+        return data;
+    }
+
+    private List<string> GetDefaultDataLabels()
+    {
+        var labels = new List<string>();
+        var labelsStatus = attendanceStatusService.GetAttendanceStatuses();
+        foreach (var label in labelsStatus)
+        {
+            labels.Add(label.CurrentDate.ToShortDateString());
+        }
+
+        return labels;
+    }
+
+    //Monthly DataSets and DataLables
+
+    private List<IChartDataset> GetMonthlyDataSets(int numberOfDatasets)
+    {
+        var datasets = new List<IChartDataset>();
+
+        for (var index = 0; index < numberOfDatasets; index++)
+        {
+            datasets.Add(GetMonthlyLineChartDataset());
+        }
+
+        return datasets;
+    }
+
+    private LineChartDataset GetMonthlyLineChartDataset()
+    {
+        var c = ColorBuilder.CategoricalTwelveColors[datasetsCount].ToColor();
+
+        datasetsCount += 1;
+
+        return new LineChartDataset
+            {
+                Label = $"Punched In Users",
+                Data = GetMonthlyData(),
+                BackgroundColor = new List<string> { c.ToRgbString() },
+                BorderColor = new List<string> { c.ToRgbString() },
+                BorderWidth = new List<double> { 2 },
+                HoverBorderWidth = new List<double> { 4 },
+                PointBackgroundColor = new List<string> { c.ToRgbString() },
+                PointRadius = new List<int> { 0 }, // hide points
+                PointHoverRadius = new List<int> { 4 }
+            };
+    }
+
+    private List<double> GetMonthlyData()
+    {
+        var data = new List<double>();
+        var PunchedInUser = attendanceStatusService.GetAttendanceStatuses();
+        var monthPunchedInUser = PunchedInUser.GroupBy(p => p.CurrentDate.Month)
+                                                            .Select(g => new
+                                                            {
+                                                                Month = g.Select(x => x.CurrentDate.Month).FirstOrDefault(),
+                                                                PunchedInUser = g.Select(x => x.PunchedInUsers).Sum(),
+                                                            }).ToList();
+        foreach (var punchedInUser in monthPunchedInUser)
+        {
+            data.Add(punchedInUser.PunchedInUser);
+        }
+
+        return data;
+    }
+
+    private List<string> GetMonthlyDataLables()
+    {
+        var labels = new List<string>();
+        var PunchedInUser = attendanceStatusService.GetAttendanceStatuses();
+        var monthPunchedInUser = PunchedInUser.GroupBy(p => p.CurrentDate.Month)
+                                                            .Select(g => new
+                                                            {
+                                                                Month = g.Select(x => x.CurrentDate.Month).FirstOrDefault(),
+                                                                PunchedInUser = g.Select(x => x.PunchedInUsers).Sum(),
+                                                            }).ToList();
+        foreach (var month in monthPunchedInUser)
+        {
+            if(month.Month == 1)
+            {
+                labels.Add("Jan");
+            }
+            else if(month.Month == 2)
+            {
+                labels.Add("Feb");
+            }
+            else if (month.Month == 3)
+            {
+                labels.Add("Mar");
+            }
+            else if (month.Month == 4)
+            {
+                labels.Add("Apr");
+            }
+            else if (month.Month == 5)
+            {
+                labels.Add("May");
+            }
+            else if (month.Month == 6)
+            {
+                labels.Add("June");
+            }
+            else if(month.Month == 7)
+            {
+                labels.Add("July");
+            }
+            else if (month.Month == 8)
+            {
+                labels.Add("Aug");
+            }
+            else if (month.Month == 9)
+            {
+                labels.Add("Sept");
+            }
+            else if(month.Month == 10)
+            {
+                labels.Add("Oct");
+            }
+            else if (month.Month == 11)
+            {
+                labels.Add("Nov");
+            }
+            else if (month.Month == 12)
+            {
+                labels.Add("Dec");
+            }
+        }
+
+        return labels;
+    }
+
+    public void SubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            if(editContext.Model.Equals(ClassificationCriteria.Day))
+            {
+                chartData = new ChartData { Labels = GetDefaultDataLabels(), Datasets = GetDefaultDataSets(1) };
+                lineChartOptions = new() { Responsive = true, Interaction = new Interaction { Mode = InteractionMode.Index } };
+                lineChart.UpdateAsync(chartData, lineChartOptions);
+            }
+            else
+            {
+                chartData = new ChartData { Labels = GetMonthlyDataLables(), Datasets = GetMonthlyDataSets(1) };
+                lineChartOptions = new() { Responsive = true, Interaction = new Interaction { Mode = InteractionMode.Index } };
+                lineChartOptions.Scales.Y.Max = 88;
+                lineChart.UpdateAsync(chartData, lineChartOptions);
+            }
+        }
+    }
+}
