@@ -1,4 +1,5 @@
-﻿@using BlazorProject.Service.IService
+﻿@page "/pendingLeaves"
+@using BlazorProject.Service.IService
 @using System.Security.Policy;
 @if(PendingLeaveList == null)
 {
@@ -56,7 +57,8 @@ else
 @code {
     [Inject]
     protected ILeaveService leaveService { get; set; }
-    protected IEnumerable<Models.Leave> PendingLeaveList { get; set; }
+    [Parameter]
+    public IEnumerable<Models.Leave> PendingLeaveList { get; set; }
     protected string Extension { get; set; }
     protected string DataURL { get; set; }
 

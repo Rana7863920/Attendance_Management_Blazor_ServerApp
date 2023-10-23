@@ -41,7 +41,8 @@ else
 @code {
     [Inject]
     protected ILeaveService leaveService { get; set; }
-    protected IEnumerable<Models.Leave> UserLeaveList { get; set; }
+    [Parameter]
+    public IEnumerable<Models.Leave> UserLeaveList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

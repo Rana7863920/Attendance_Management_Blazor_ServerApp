@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\BlazorProject.bundle.scp.css"
     },
     {
+      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\1212.txt",
+      "PackagePath": "staticwebassets\\Images\\1212.txt"
+    },
+    {
+      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\1212.txt- Copy",
+      "PackagePath": "staticwebassets\\Images\\1212.txt- Copy"
+    },
+    {
       "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\B_Tech_ CSE Batch 2018 (07-05-2020)-pages-deleted.pdf",
       "PackagePath": "staticwebassets\\Images\\B_Tech_ CSE Batch 2018 (07-05-2020)-pages-deleted.pdf"
     },
@@ -15,6 +23,14 @@
     {
       "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\Date - 09-10-2023.txt",
       "PackagePath": "staticwebassets\\Images\\Date - 09-10-2023.txt"
+    },
+    {
+      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\Estimate.txt",
+      "PackagePath": "staticwebassets\\Images\\Estimate.txt"
+    },
+    {
+      "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\Script.ipynb",
+      "PackagePath": "staticwebassets\\Images\\Script.ipynb"
     },
     {
       "Id": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\mouse2.jpg",

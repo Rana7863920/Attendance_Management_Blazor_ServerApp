@@ -1,11 +1,9 @@
-Date: - 09-10-2023
+Date: - 19-10-2023
 
 I worked on:- Attendance Management in Blazor Server
 
--Design Database Tables for Leave Mangement.
--Create Leave Type Table in Project.
--Create UI for CRUD for Leave Type.
--Implement CRUD Backend logic for Leave Type.
+-Added preloading in table pages.
+
 
 Obstacle:- None
 

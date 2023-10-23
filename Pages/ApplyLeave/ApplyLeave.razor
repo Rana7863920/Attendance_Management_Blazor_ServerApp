@@ -76,12 +76,12 @@
     </Tab>
     <Tab Title="Pending">
         <Content>
-            <PendingLeaves />
+            <PendingLeaves PendingLeaveList="PendingLeaveList" />
         </Content>
     </Tab>
     <Tab Title="History">
         <Content>
-            <LeaveHistory />
+            <LeaveHistory UserLeaveList="UserLeaveList"/>
         </Content>
     </Tab>
 </Tabs>
@@ -107,17 +107,25 @@
             Message = $"You don't have these many leaves... Please Check...",
             AutoHide = true,
         };
+    public IEnumerable<Models.Leave> PendingLeaveList { get; set; }
+    public IEnumerable<Models.Leave> UserLeaveList { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
         UserLeaveTypeList = leaveBalanceService.GetLeaveBalanceOfUser();
+        PendingLeaveList = leaveService.GetUserPendingLeaves();
     }
 
     public async Task OnChangeUpload(InputFileChangeEventArgs args)
     {
         SelectedFile = args.File;
         var path = Path.GetFullPath("wwwroot\\Images\\") + SelectedFile.Name;
+        bool isFileExistAlready = File.Exists(path);
+        if (isFileExistAlready)
+        {
+            path = path + "- Copy";
+        }
         ContentType = SelectedFile.ContentType;
         await using FileStream fs = new(path, FileMode.Create);
         await SelectedFile.OpenReadStream().CopyToAsync(fs);
@@ -140,6 +148,8 @@
             if (Applied)
             {
                 Leave = new Models.Leave();
+                PendingLeaveList = leaveService.GetUserPendingLeaves();
+                UserLeaveList = leaveService.GetUserLeaves();
             }
             else
             {

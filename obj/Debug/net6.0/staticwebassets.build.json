@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dQTg0I3lYu0FLa+D3Na397tPjfP91lGLEfY2L2fJAO4=",
+  "Hash": "hSqkKaHmjJGkmY0mNRIPMADBXkAko9jWP/Bjdr1t+KU=",
   "Source": "BlazorProject",
   "BasePath": "_content/BlazorProject",
   "Mode": "Default",
@@ -1360,6 +1360,40 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\1212.txt",
+      "SourceId": "BlazorProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\",
+      "BasePath": "_content/BlazorProject",
+      "RelativePath": "Images/1212.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\1212.txt"
+    },
+    {
+      "Identity": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\1212.txt- Copy",
+      "SourceId": "BlazorProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\",
+      "BasePath": "_content/BlazorProject",
+      "RelativePath": "Images/1212.txt- Copy",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\1212.txt- Copy"
+    },
+    {
       "Identity": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\B_Tech_ CSE Batch 2018 (07-05-2020)-pages-deleted.pdf",
       "SourceId": "BlazorProject",
       "SourceType": "Discovered",
@@ -1411,6 +1445,23 @@
       "OriginalItemSpec": "wwwroot\\Images\\Date - 09-10-2023.txt"
     },
     {
+      "Identity": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\Estimate.txt",
+      "SourceId": "BlazorProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\",
+      "BasePath": "_content/BlazorProject",
+      "RelativePath": "Images/Estimate.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Estimate.txt"
+    },
+    {
       "Identity": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\mouse2.jpg",
       "SourceId": "BlazorProject",
       "SourceType": "Discovered",
@@ -1426,6 +1477,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\mouse2.jpg"
+    },
+    {
+      "Identity": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\Images\\Script.ipynb",
+      "SourceId": "BlazorProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Blazor\\BlazorProject\\BlazorProject\\wwwroot\\",
+      "BasePath": "_content/BlazorProject",
+      "RelativePath": "Images/Script.ipynb",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Script.ipynb"
     }
   ]
 }

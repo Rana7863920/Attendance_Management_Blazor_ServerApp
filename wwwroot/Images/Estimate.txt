@@ -1,0 +1,36 @@
+Estimate Time for create Leave Services..
+----------------------------------------
+BackEnd:- Asp.net web Api
+
+1)create Admin controller for handle crud operation and create another Admin => 5:hrs
+2)Design database for Leave 2:hrs
+3)create granted leave service using mediator pattern with Admin Authrized => 3:hrs
+4)create apply leave service with crud operation 4:hrs
+5)Add count logic for user Apply leave when is Approved then minus count => 6:hrs
+6)Add logic of Approved and pending or cancel leave and get there status wise => 5:hrs
+7)create service for get leave catagory with there approved leave count and grant count => 4:hrs
+8)In leave service add email service and add leave on Admin pannel for Approved => 4:hrs
+9)In leave service convert attachment to base64 on post or get method => 3:hrs
+10)Create History service for get leave data => 2:hrs
+
+Frontend:- Angular
+--------------------------------------------------
+create Admin Panel for Manage crud operation 4:hrs
+1)create newUser component and html template for Admin to create new user with there role: => 4 hrs
+2)In angular leave section create three tabs for apply leave pending leave and history: => 1 hrs
+3)Apply leave tab create html template or add functionality to apply leave and cancel leave with there reason: =>5 hrs
+4)Pending leave tab create html template and fetch with api to show pending leave:=> 2 hrs
+5)In History tab create html template and show all data like which leave approved or cancel or pending:=> 2 hrs
+6)create component and there html for show user leave catagory with there apply leave count and granted:=>3:hrs
+
+Testing and fixbugs
+Backend:-
+--------------------------------------------------
+1) Testing leave service and fix there bugs => 6:hrs
+2) Testing granted and Admin service and fix bugs => 4:hrs
+ frontend:-
+--------------------------------------------------
+1) Testing created tabs and fix bugs => 6:hrs.
+ 
+ Total Estimate 76:hrs
+ 
