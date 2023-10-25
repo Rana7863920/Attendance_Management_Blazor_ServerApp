@@ -1,91 +1,91 @@
 ﻿@page "/applyLeave"
 @using BlazorBootstrap
 @using BlazorProject.Service.IService
-<Tabs EnableFadeEffect="true" NavStyle="NavStyle.Pills">
-    <Tab Title="Apply Leave" IsActive="true">
-        <Content>
-            <div class="col-6 m-auto my-3" style="border:2px solid black;background-color:lightgray">
-                <div class="h3" style="text-align:center">Apply For Leave</div><hr />
-                <div>
-                    <EditForm Model="@Leave" OnValidSubmit="@SubmitForm">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                        <div class="form-group m-2 p-2">
-                            <div class="row">
-                                <label style="margin-left:-2%;color:black;font-size:large">Leave Type</label>
-                                <InputSelect @bind-Value="Leave.LeaveTypeId" class="p-lg-2">
-                                    <option selected disabled class="text-center">-- LeaveType --</option>
-                                    @foreach (var leaveType in UserLeaveTypeList)
-                                    {
-                                        <option value="@leaveType.LeaveType.Id">@leaveType.LeaveType.Name</option>
-                                    }
-                                </InputSelect>
-                            </div>
-                        </div>
-                        <div class="form-group p-2">
-                            <div class="row">
-                                <div class="col-md-6 mr-2">
-                                    <label style="font-size:large">Start Date</label>
-                                    <InputDate @bind-Value="Leave.StartDate" min="@MinStartDate.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
-                                </div>
-                                <div class="col-md-6 ml-2">
-                                    <label style="font-size:large">End Date</label>
-                                    <InputDate @bind-Value="Leave.EndDate" min="@MinEndDate.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+    <Tabs EnableFadeEffect="true" NavStyle="NavStyle.Pills">
+        <Tab Title="Apply Leave" IsActive="true">
+            <Content>
+                <div class="col-6 m-auto my-3" style="border:2px solid black;background-color:lightgray">
+                    <div class="h3" style="text-align:center">Apply For Leave</div><hr />
+                    <div>
+                        <EditForm Model="@Leave" OnValidSubmit="@SubmitForm">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <div class="form-group m-2 p-2">
+                                <div class="row">
+                                    <label style="margin-left:-2%;color:black;font-size:large">Leave Type</label>
+                                    <InputSelect @bind-Value="Leave.LeaveTypeId" class="p-lg-2">
+                                        <option selected disabled class="text-center">-- LeaveType --</option>
+                                        @foreach (var leaveType in UserLeaveTypeList)
+                                        {
+                                            <option value="@leaveType.LeaveType.Id">@leaveType.LeaveType.Name</option>
+                                        }
+                                    </InputSelect>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group m-2 p-2">
-                            <div class="row">
-                                <label style="margin-left:-2%;font-size:large">Contact</label>
-                                <InputText @bind-Value="Leave.Contact" class="form-control" placeholder="Contact-Info" />
-                            </div>
-                        </div>
-                        <div class="form-group m-2 p-2">
-                            <div class="row">
-                                <label style="margin-left:-2%;font-size:large">Reason For Leave</label>
-                                <InputTextArea @bind-Value="Leave.Reason" placeholder="Add Reason here..."></InputTextArea>
-                            </div>
-                        </div>
-                        <div class="form-group p-2">
-                            <div class="row">
-                                <div class="col-md-6 mr-2">
-                                    <label style="font-size:large">To</label>
-                                    <InputText @bind-Value="Leave.To" class="form-control" placeholder="To" />
-                                </div>
-                                <div class="col-md-6 ml-2">
-                                    <label style="font-size:large">CC</label>
-                                    <InputText @bind-Value="Leave.CC" class="form-control" placeholder="CC" />
+                            <div class="form-group p-2">
+                                <div class="row">
+                                    <div class="col-md-6 mr-2">
+                                        <label style="font-size:large">Start Date</label>
+                                        <InputDate @bind-Value="Leave.StartDate" min="@MinStartDate.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+                                    </div>
+                                    <div class="col-md-6 ml-2">
+                                        <label style="font-size:large">End Date</label>
+                                        <InputDate @bind-Value="Leave.EndDate" min="@MinEndDate.ToString("yyyy-MM-dd")" class="p-lg-2 form-control" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group m-2 p-2">
-                            <div class="row">
-                                <div class="col-5 m-auto">
-                                    <label style="margin-left:-2%;font-size:large">Attach File</label>
-                                    <InputFile OnChange="OnChangeUpload" multiple />
-                                </div>
-                                <div class="col-5 m-auto">
-                                    <button type="submit" class="btn btn-primary form-control" style="background-color:darkblue;" value="Update">Apply</button>
+                            <div class="form-group m-2 p-2">
+                                <div class="row">
+                                    <label style="margin-left:-2%;font-size:large">Contact</label>
+                                    <InputText @bind-Value="Leave.Contact" class="form-control" placeholder="Contact-Info" />
                                 </div>
                             </div>
-                        </div>
-                    </EditForm>
+                            <div class="form-group m-2 p-2">
+                                <div class="row">
+                                    <label style="margin-left:-2%;font-size:large">Reason For Leave</label>
+                                    <InputTextArea @bind-Value="Leave.Reason" placeholder="Add Reason here..."></InputTextArea>
+                                </div>
+                            </div>
+                            <div class="form-group p-2">
+                                <div class="row">
+                                    <div class="col-md-6 mr-2">
+                                        <label style="font-size:large">To</label>
+                                        <InputText @bind-Value="Leave.To" class="form-control" placeholder="To" />
+                                    </div>
+                                    <div class="col-md-6 ml-2">
+                                        <label style="font-size:large">CC</label>
+                                        <InputText @bind-Value="Leave.CC" class="form-control" placeholder="CC" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-2 p-2">
+                                <div class="row">
+                                    <div class="col-5 m-auto">
+                                        <label style="margin-left:-2%;font-size:large">Attach File</label>
+                                    <InputFile OnChange="OnChangeUpload" multiple accept=".pdf, .txt, .jpg" />
+                                    </div>
+                                    <div class="col-5 m-auto">
+                                        <button type="submit" class="btn btn-primary form-control" style="background-color:darkblue;" value="Update">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </EditForm>
+                    </div>
                 </div>
-            </div>
-        </Content>
-    </Tab>
-    <Tab Title="Pending">
-        <Content>
-            <PendingLeaves PendingLeaveList="PendingLeaveList" />
-        </Content>
-    </Tab>
-    <Tab Title="History">
-        <Content>
-            <LeaveHistory UserLeaveList="UserLeaveList"/>
-        </Content>
-    </Tab>
-</Tabs>
-<Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
+            </Content>
+        </Tab>
+        <Tab Title="Pending">
+            <Content>
+                <PendingLeaves PendingLeaveList="PendingLeaveList" />
+            </Content>
+        </Tab>
+        <Tab Title="History">
+            <Content>
+                <LeaveHistory UserLeaveList="UserLeaveList" />
+            </Content>
+        </Tab>
+    </Tabs>
+    <Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
 
 @code {
     [Inject]
@@ -100,11 +100,11 @@
     protected String S { get; set; }
     protected string ContentType { get; set; }
     List<ToastMessage> messages = new List<ToastMessage>();
-    private ToastMessage CreateToastMessage(ToastType toastType)
+    private ToastMessage CreateToastMessage(ToastType toastType, string message)
     => new ToastMessage
         {
             Type = toastType,
-            Message = $"You don't have these many leaves... Please Check...",
+            Message = message,
             AutoHide = true,
         };
     public IEnumerable<Models.Leave> PendingLeaveList { get; set; }
@@ -120,20 +120,27 @@
     public async Task OnChangeUpload(InputFileChangeEventArgs args)
     {
         SelectedFile = args.File;
-        var path = Path.GetFullPath("wwwroot\\Images\\") + SelectedFile.Name;
-        bool isFileExistAlready = File.Exists(path);
-        if (isFileExistAlready)
-        {
-            path = path + "- Copy";
-        }
         ContentType = SelectedFile.ContentType;
-        await using FileStream fs = new(path, FileMode.Create);
-        await SelectedFile.OpenReadStream().CopyToAsync(fs);
-        using (var ms = new MemoryStream())
+        if (ContentType == "image/jpeg" || ContentType == "text/plain" || ContentType == "application/pdf")
         {
-            await SelectedFile.OpenReadStream().CopyToAsync(ms);
-            var fileBytes = ms.ToArray();
-            S = Convert.ToBase64String(fileBytes);
+            var path = Path.GetFullPath("wwwroot\\Images\\") + SelectedFile.Name;
+            bool isFileExistAlready = File.Exists(path);
+            if (isFileExistAlready)
+            {
+                path = path + "- Copy";
+            }
+            await using FileStream fs = new(path, FileMode.Create);
+            await SelectedFile.OpenReadStream().CopyToAsync(fs);
+            using (var ms = new MemoryStream())
+            {
+                await SelectedFile.OpenReadStream().CopyToAsync(ms);
+                var fileBytes = ms.ToArray();
+                S = Convert.ToBase64String(fileBytes);
+            }
+        }
+        else
+        {
+            messages.Add(CreateToastMessage(ToastType.Danger, $"Please select either .jpg, .pdf, .txt extension files... File you selected is not acceptable"));
         }
     }
 
@@ -153,7 +160,7 @@
             }
             else
             {
-                messages.Add(CreateToastMessage(ToastType.Danger));
+                messages.Add(CreateToastMessage(ToastType.Danger, $"You don't have these many leaves... Please Check..."));
             }
         }
     }

@@ -2,9 +2,11 @@
 @using BlazorProject.Service.IService
 @using BlazorBootstrap
 
-<h3>Attendance Status PieChart</h3>
+<AuthorizeView Roles="Admin">
+    <h3>Attendance Status PieChart</h3>
 
-<PieChart @ref="pieChart" Width="500" Class="mb-5" />
+    <PieChart @ref="pieChart" Width="500" Class="mb-5" />
+</AuthorizeView>
 
 @code {
     [Inject]
@@ -56,7 +58,7 @@
         if (count == 0)
         {
             count++;
-            return new() {  Data = GetRandomData(), BackgroundColor = GetRandomBackgroundColors() };
+            return new() { Data = GetRandomData(), BackgroundColor = GetRandomBackgroundColors() };
         }
         else
         {

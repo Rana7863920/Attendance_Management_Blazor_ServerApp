@@ -18,9 +18,11 @@ namespace BlazorProject.Models
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
+        [Required]
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        [Required]
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         [Required]

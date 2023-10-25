@@ -14,6 +14,8 @@
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseModal"><span class="oi oi-circle-x"></span></button>
             </div>
             <EditForm Model="@Task" OnValidSubmit="@SubmitForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
                 <div class="modal-body">
 
                     <div class="form-group m-2 p-2">

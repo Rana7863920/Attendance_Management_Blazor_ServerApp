@@ -38,7 +38,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AttendanceStatuses");
+                    b.ToTable("AttendanceStatuses", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.Leave", b =>
@@ -94,7 +94,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasIndex("LeaveTypeId", "ApplicationUserId");
 
-                    b.ToTable("Leaves");
+                    b.ToTable("Leaves", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.LeaveBalance", b =>
@@ -118,7 +118,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("LeaveBalances");
+                    b.ToTable("LeaveBalances", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.LeaveType", b =>
@@ -135,7 +135,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LeaveTypes");
+                    b.ToTable("LeaveTypes", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.Project", b =>
@@ -152,7 +152,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.Student", b =>
@@ -173,7 +173,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.Task", b =>
@@ -217,7 +217,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("BlazorProject.Models.UserAttendance", b =>
@@ -248,7 +248,7 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAttendances");
+                    b.ToTable("UserAttendances", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

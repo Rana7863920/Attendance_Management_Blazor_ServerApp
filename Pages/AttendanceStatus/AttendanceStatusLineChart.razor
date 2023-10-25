@@ -2,26 +2,26 @@
 @using BlazorProject.Service.IService;
 @using BlazorBootstrap;
 
-
-<h3>Attendance Status (Line Chart)</h3>
-<EditForm Model="@classificationCriteria" OnValidSubmit="@SubmitForm">
-    <div class="row">
-        <div class="col-md-5">
-            <InputSelect @bind-Value="classificationCriteria" class="p-lg-2">
-                <option selected disabled class="text-center">-- Data Classification Criteria --</option>
-                @foreach (var criteria in Enum.GetValues(typeof(ClassificationCriteria)))
-                {
-                    <option value="@criteria">@criteria</option>
-                }
-            </InputSelect>
+    <h3>Attendance Status (Line Chart)</h3>
+    <EditForm Model="@classificationCriteria" OnValidSubmit="@SubmitForm">
+        <div class="row">
+            <div class="col-md-5">
+                <InputSelect @bind-Value="classificationCriteria" class="p-lg-2">
+                    <option selected disabled class="text-center">-- Data Classification Criteria --</option>
+                    @foreach (var criteria in Enum.GetValues(typeof(ClassificationCriteria)))
+                    {
+                        <option value="@criteria">@criteria</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col-md-5" style="margin-left:-20%">
+                <button type="submit" class="btn btn-primary" style="background-color:darkblue;" value="Save">Submit</button>
+            </div>
         </div>
-        <div class="col-md-5" style="margin-left:-20%">
-            <button type="submit" class="btn btn-primary" style="background-color:darkblue;" value="Save">Submit</button>
-        </div>
-    </div>
-</EditForm>
-
+    </EditForm>
+    
 <LineChart @ref="lineChart" Width="1000" Class="mb-4" />
+
 
 @code {
     [Inject]
@@ -182,11 +182,11 @@
                                                             }).ToList();
         foreach (var month in monthPunchedInUser)
         {
-            if(month.Month == 1)
+            if (month.Month == 1)
             {
                 labels.Add("Jan");
             }
-            else if(month.Month == 2)
+            else if (month.Month == 2)
             {
                 labels.Add("Feb");
             }
@@ -206,7 +206,7 @@
             {
                 labels.Add("June");
             }
-            else if(month.Month == 7)
+            else if (month.Month == 7)
             {
                 labels.Add("July");
             }
@@ -218,7 +218,7 @@
             {
                 labels.Add("Sept");
             }
-            else if(month.Month == 10)
+            else if (month.Month == 10)
             {
                 labels.Add("Oct");
             }
@@ -240,7 +240,7 @@
         bool formIsValid = editContext.Validate();
         if (formIsValid)
         {
-            if(editContext.Model.Equals(ClassificationCriteria.Day))
+            if (editContext.Model.Equals(ClassificationCriteria.Day))
             {
                 chartData = new ChartData { Labels = GetDefaultDataLabels(), Datasets = GetDefaultDataSets(1) };
                 lineChartOptions = new() { Responsive = true, Interaction = new Interaction { Mode = InteractionMode.Index } };

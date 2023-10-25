@@ -1,42 +1,44 @@
 ﻿@page "/leaveNotification"
 @using BlazorProject.Service.IService
 @using BlazorBootstrap
-<div class="row">
-    <div class="col-md-9">
-        <h3 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Leave Notification</h3>
+<AuthorizeView Roles="Admin">
+    <div class="row">
+        <div class="col-md-9">
+            <h3 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Leave Notification</h3>
+        </div>
     </div>
-</div>
-<table class="table table-bordered table-striped table-active m-2 p-2">
-    <thead>
-        <tr>
-            <th>User Name</th>
-            <th>Leave Type</th>
-            <th>Reason</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>No of Days</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var leave in LeaveList)
-        {
-            <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-                <td>@leave.LeaveBalance.ApplicationUser.Name</td>
-                <td>@leave.LeaveBalance.LeaveType.Name</td>
-                <td>@leave.Reason</td>
-                <td>@leave.StartDate.ToShortDateString()</td>
-                <td>@leave.EndDate.ToShortDateString()</td>
-                <td>@NoOfDays(leave)</td>
-                <td>
-                    <button type="button" class="btn-success p-2" @onclick="(() => LeaveApproved(leave))">Approved</button>
-                    <button type="button" class="btn-danger p-2" @onclick="(() => LeaveRejected(leave))">Rejected</button>
-                </td>
+    <table class="table table-bordered table-striped table-active m-2 p-2">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Leave Type</th>
+                <th>Reason</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>No of Days</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
-<Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
+        </thead>
+        <tbody>
+            @foreach (var leave in LeaveList)
+            {
+                <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    <td>@leave.LeaveBalance.ApplicationUser.Name</td>
+                    <td>@leave.LeaveBalance.LeaveType.Name</td>
+                    <td>@leave.Reason</td>
+                    <td>@leave.StartDate.ToShortDateString()</td>
+                    <td>@leave.EndDate.ToShortDateString()</td>
+                    <td>@NoOfDays(leave)</td>
+                    <td>
+                        <button type="button" class="btn-success p-2" @onclick="(() => LeaveApproved(leave))">Approved</button>
+                        <button type="button" class="btn-danger p-2" @onclick="(() => LeaveRejected(leave))">Rejected</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
+</AuthorizeView>
 @code {
     [Inject]
     protected ILeaveService leaveService { get; set; }
