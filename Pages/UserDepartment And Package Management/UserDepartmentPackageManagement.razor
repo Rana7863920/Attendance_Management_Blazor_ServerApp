@@ -1,0 +1,112 @@
+﻿@page "/userDepartmentPackageManagement"
+@using BlazorProject.Models;
+@using BlazorProject.Service.IService;
+<h2>User's Department and Package Management</h2>
+<div>
+    <EditForm Model="@ApplicationUser" OnSubmit="@SubmitForm">
+        <div class="m-auto col-md-6" style="border:1px solid black;">
+            <div class="form-group m-2 p-2">
+                <div class="form-control">
+                    <div class="row">
+                        <label style="black;font-size:large">User</label>
+                    </div>
+                    <div class="row">
+                        <InputSelect @bind-Value="ApplicationUser.Id" class="p-lg-2">
+                            <option selected disabled class="text-center">-- User --</option>
+                            @foreach (var user in UserList)
+                            {
+                                <option value="@user.Id">@user.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-2 p-2">
+                <div class="form-control">
+                    <div class="row">
+                        <label style="black;font-size:large">Department</label>
+                    </div>
+                    <div class="row">
+                        <InputSelect @bind-Value="ApplicationUser.DepartmentId" class="p-lg-2">
+                            <option selected disabled class="text-center">-- Department --</option>
+                            @foreach (var department in DepartmentList)
+                            {
+                                <option value="@department.Id">@department.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-2 p-2">
+                <div class="form-control">
+                    <div class="col-5 m-auto">
+                        <label style="margin-left:-2%;font-size:large">Apply for PF or Not</label>
+                        <InputSelect @bind-Value="optForPF" class="p-lg-2">
+                            <option selected disabled class="text-center">-- Apply for PF or Not --</option>
+                            @foreach (var opt in Enum.GetValues(typeof(OptForPF)))
+                            {
+                                <option value="@opt">@opt</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-2 p-2">
+                <div class="form-control">
+                    <div class="col-5 m-auto">
+                        <label style="margin-left:-2%;font-size:large">Package</label>
+                        <InputNumber @bind-Value="ApplicationUser.Finance.Package" min="1" class="form-control" placeholder="Contact-Info" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-2 p-2">
+                <div class="form-control">
+                    <div class="col-5 m-auto">
+                        <button type="submit" class="btn btn-primary form-control" style="background-color:darkblue;" value="Update">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    [Inject]
+    protected IUserService userService { get; set; }
+    [Inject]
+    protected IDepartmentService departmentService { get; set; }
+    [Inject]
+    protected IUserDepPackageService userDepPackageService { get; set; }
+    protected ApplicationUser ApplicationUser { get; set; } = new ApplicationUser() 
+                                                            { 
+                                                                Finance = new Finance(), 
+                                                                Department = new Department() 
+                                                            };
+    protected IEnumerable<ApplicationUser> UserList { get; set; }
+    protected IEnumerable<Department> DepartmentList { get; set; }
+    public enum OptForPF
+    {
+        Yes,
+        No
+    }
+    protected OptForPF optForPF { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        UserList = userService.GetAllUsers();
+        DepartmentList = departmentService.GetDepartments();
+    }
+
+    public void SubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            bool isAdded = userDepPackageService.AddDepPackage(ApplicationUser, optForPF.ToString());
+            if (isAdded)
+            {
+                ApplicationUser = new ApplicationUser();
+            }
+        }
+    }
+}

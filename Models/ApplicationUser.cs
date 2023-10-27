@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazorProject.Models
 {
-    public class ApplicationUser:IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         [Required]
         public string Name { get; set; }
@@ -17,5 +17,11 @@ namespace BlazorProject.Models
         public string PostalCode { get; set; }
         [NotMapped]
         public string Role { get; set; }
+        [ForeignKey("Department")]
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+        [ForeignKey("Finance")]
+        public int FinanceId { get; set; }
+        public Finance Finance { get; set; } 
     }
 }

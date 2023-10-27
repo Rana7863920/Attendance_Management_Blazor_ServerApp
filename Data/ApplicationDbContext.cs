@@ -26,5 +26,8 @@ namespace BlazorProject.Data
         }
         public DbSet<Leave> Leaves { get; set; }
         public DbSet<AttendanceStatus> AttendanceStatuses { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Finance> Finances { get; set; }
+        public DbSet<MonthlySalary> MonthlySalaries { get; set; }
     }
 }

@@ -1,0 +1,85 @@
+﻿@using BlazorProject.Service.IService
+@inherits Department
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+<div class="modal fade show @showClass" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:darkblue;color:white">
+                <h5 class="modal-title" style="margin-left:34%;" id="taskModalLabel">Add Your Task</h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseModal"><span class="oi oi-circle-x"></span></button>
+            </div>
+            <EditForm Model="@Department" OnValidSubmit="@SubmitForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="modal-body">
+                    <div class="form-group p-2">
+                        <div class="row">
+                            <div class="col-md-5 ml-2">
+                                <label style="font-size:large">Department Name</label>
+                            </div>
+                            <div class="col-md-5 ml-2">
+                                <InputText @bind-Value="Department.Name" class="form-control" placeholder="Department-Name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-5 m-auto">
+                        <button type="button" class="btn btn-secondary form-control" @onclick="CloseModal">Close</button>
+                    </div>
+                    <div class="col-5 m-auto">
+                        <button type="submit" class="btn btn-primary form-control" style="background-color:darkblue;" value="Save">Save</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject]
+    public IDepartmentService departmentService { get; set; }
+    protected Models.Department Department { get; set; } = new Models.Department();
+    protected bool IsVisible { get; set; } = false;
+    [Parameter]
+    public EventCallback<IEnumerable<Models.Department>> OnCreateDepartment { get; set; }
+
+    public void Show()
+    {
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    public void CloseModal()
+    {
+        IsVisible = false;
+    }
+
+    new public void GetDepartments()
+    {
+        DepartmentList = departmentService.GetDepartments();
+    }
+
+    public void SubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            bool Saved = departmentService.CreateDepartment(Department);
+            if (Saved)
+            {
+                IsVisible = false;
+                CreateDepartmentHandler();
+                Department = new Models.Department();
+            }
+        }
+    }
+
+    public async System.Threading.Tasks.Task CreateDepartmentHandler()
+    {
+        GetDepartments();
+        await OnCreateDepartment.InvokeAsync(DepartmentList);
+    }
+}

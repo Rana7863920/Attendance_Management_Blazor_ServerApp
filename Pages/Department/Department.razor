@@ -1,0 +1,88 @@
+﻿@page "/department"
+@using BlazorProject.Service.IService
+<AuthorizeView Roles="Admin">
+    <div class="row">
+        <div class="col-md-9">
+            <h3 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Department List</h3>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="form-control btn btn-primary" @onclick="CreateModalPage"><span class="oi oi-plus"></span>&nbsp;&nbsp;Add Department</button>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped table-active m-2 p-2">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (DepartmentList == null)
+            {
+                <p>No Data Found...</p>
+            }
+            else
+            {
+                @foreach (var department in DepartmentList)
+                {
+                    <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                        <td>@department.Name</td>
+                        <td>
+                            <button type="button" class="btn-primary p-2" @onclick="@(() => EditModalPage(department.Id))"><span class="oi oi-pencil"></span>&nbsp;&nbsp;Edit</button>
+                            <button type="button" class="btn-danger p-2" @onclick="@(() => DeleteModalPage(department.Id))"><span class="oi oi-delete"></span>&nbsp;&nbsp;Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <CreateDepartmentModal @ref="CreateDepartmentModalRef" OnCreateDepartment="HandleCreateDepartment" />
+    <EditDepartmentModal @ref="EditDepartmentModalRef" OnUpdateDepartment="HandleUpdateDepartment" />
+    <DeleteDepartmentModal @ref="DeleteDepartmentModalRef" OnDeleteDepartment="HandleDeleteDepartment" />
+</AuthorizeView>
+@code {
+    [Inject]
+    public IDepartmentService departmentService { get; set; }
+    public IEnumerable<Models.Department> DepartmentList { get; set; }
+    public CreateDepartmentModal CreateDepartmentModalRef { get; set; }
+    public EditDepartmentModal EditDepartmentModalRef { get; set; }
+    public DeleteDepartmentModal DeleteDepartmentModalRef { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        DepartmentList = departmentService.GetDepartments();
+    }
+
+    private void CreateModalPage()
+    {
+        CreateDepartmentModalRef.Show();
+    }
+
+    private void HandleCreateDepartment(IEnumerable<Models.Department> departmentList)
+    {
+        DepartmentList = departmentList;
+        StateHasChanged();
+    }
+
+    private void EditModalPage(int id)
+    {
+        EditDepartmentModalRef.Show(id);
+    }
+
+    private void HandleUpdateDepartment(bool isUpdated)
+    {
+        if (isUpdated)
+            StateHasChanged();
+    }
+
+    private void DeleteModalPage(int id)
+    {
+        DeleteDepartmentModalRef.Show(id);
+    }
+
+    private void HandleDeleteDepartment(IEnumerable<Models.Department> departmentList)
+    {
+        DepartmentList = departmentList;
+        StateHasChanged();
+    }
+}

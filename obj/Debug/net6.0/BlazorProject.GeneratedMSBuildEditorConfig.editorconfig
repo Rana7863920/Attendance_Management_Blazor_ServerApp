@@ -48,6 +48,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Department/CreateDepartmentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudFxDcmVhdGVEZXBhcnRtZW50TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Department/DeleteDepartmentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudFxEZWxldGVEZXBhcnRtZW50TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Department/Department.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudFxEZXBhcnRtZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/Department/EditDepartmentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudFxFZGl0RGVwYXJ0bWVudE1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/DragDrop Task/EditInDragDrop.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRHJhZ0Ryb3AgVGFza1xFZGl0SW5EcmFnRHJvcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -116,6 +132,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhdmVUeXBlXExlYXZlVHlwZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/SalaryCredit/SalaryCredit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsYXJ5Q3JlZGl0XFNhbGFyeUNyZWRpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Task/DeleteTaskModal.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza1xEZWxldGVUYXNrTW9kYWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -130,6 +150,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Blazor/BlazorProject/BlazorProject/Pages/Task/TaskRecord.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza1xUYXNrUmVjb3JkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Blazor/BlazorProject/BlazorProject/Pages/UserDepartment And Package Management/UserDepartmentPackageManagement.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlckRlcGFydG1lbnQgQW5kIFBhY2thZ2UgTWFuYWdlbWVudFxVc2VyRGVwYXJ0bWVudFBhY2thZ2VNYW5hZ2VtZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Blazor/BlazorProject/BlazorProject/Shared/LoginDisplay.razor]

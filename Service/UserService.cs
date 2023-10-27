@@ -111,7 +111,7 @@ namespace BlazorProject.Service
 
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            var users = _context.ApplicationUsers.ToList();
+            var users = _context.ApplicationUsers.ToList().Where(a => a.Id != "f16aa2b8-d99c-4211-874c-46d8bd0e0a59");
             return users;
         }
 
