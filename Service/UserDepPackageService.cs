@@ -12,10 +12,10 @@ namespace BlazorProject.Service
             _context = context;
         }
 
-        public bool AddDepPackage(ApplicationUser applicationUser, string optForPF)
+        public bool AddPackage(ApplicationUser applicationUser, string optForPF)
         {
             if (applicationUser == null) return false;
-            if(optForPF == "Yes")
+            if (optForPF == "Yes")
             {
                 applicationUser.Finance.PF = true;
             }
@@ -24,12 +24,25 @@ namespace BlazorProject.Service
                 applicationUser.Finance.PF = false;
             }
             applicationUser.Finance.Salary = applicationUser.Finance.Package / 12;
-            var user = _context.ApplicationUsers.FirstOrDefault(a => a.Id == applicationUser.Id);
-            user.Finance = applicationUser.Finance;
-            user.DepartmentId = applicationUser.DepartmentId;
-            var department = _context.Departments.FirstOrDefault(d => d.Id == applicationUser.DepartmentId);
-            user.Department = department;
-            _context.ApplicationUsers.Update(user);
+            var finance = _context.Finances.FirstOrDefault(f => f.ApplicationUserId == applicationUser.Id);
+            if(finance == null)
+            {
+                Finance userFinance = new Finance()
+                {
+                    Package = applicationUser.Finance.Package,
+                    Salary = applicationUser.Finance.Salary,
+                    PF = applicationUser.Finance.PF,
+                    ApplicationUserId = applicationUser.Id
+                };
+                _context.Finances.Add(userFinance);
+            }
+            else
+            {
+                finance.Package = applicationUser.Finance.Package;
+                finance.PF = applicationUser.Finance.PF;
+                finance.Salary = applicationUser.Finance.Salary;
+                _context.Finances.Update(finance);
+            }
             _context.SaveChanges();
             return true;
         }

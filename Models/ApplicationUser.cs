@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,8 +21,7 @@ namespace BlazorProject.Models
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
-        [ForeignKey("Finance")]
-        public int FinanceId { get; set; }
-        public Finance Finance { get; set; } 
+        public Finance Finance { get; } = new Finance();
+        public ICollection<MonthlySalary> MonthlySalaries { get; } = new List<MonthlySalary>();
     }
 }

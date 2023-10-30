@@ -2,6 +2,7 @@
 using BlazorProject.Models;
 using BlazorProject.Service.IService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Security.Claims;
 
@@ -117,8 +118,23 @@ namespace BlazorProject.Service
 
         public ApplicationUser GetUserById(string id)
         {
-            var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == id);
+            var user = _context.ApplicationUsers.Include(a => a.Department).FirstOrDefault(u => u.Id == id);
             return user;
+        }
+
+        public bool UpdateUser(ApplicationUser user)
+        {
+            if (user == null) return false;
+            _context.ApplicationUsers.Update(user);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public ApplicationUser GetApplicationUser()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationUser = _context.ApplicationUsers.Include(a => a.Department).FirstOrDefault(a => a.Id == userId);
+            return applicationUser;
         }
     }
 }

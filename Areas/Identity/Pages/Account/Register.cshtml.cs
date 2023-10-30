@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using BlazorProject.Data;
 using BlazorProject.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,7 @@ namespace BlazorProject.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             RoleManager<IdentityRole> roleManager,
@@ -40,7 +42,8 @@ namespace BlazorProject.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -49,6 +52,7 @@ namespace BlazorProject.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -116,11 +120,21 @@ namespace BlazorProject.Areas.Identity.Pages.Account
             [Display(Name = "Postal Code")]
             public string PostalCode { get; set; }
             public string Role { get; set; }
+            public int? DepartmentId { get; set; }
+            public IEnumerable<SelectListItem> DepartmentList { get; set; }
         }
 
 
         public async System.Threading.Tasks.Task OnGetAsync(string returnUrl = null)
         {
+            Input = new InputModel()
+            {
+                DepartmentList = _context.Departments.ToList().Select(cl => new SelectListItem()
+                {
+                    Text = cl.Name,
+                    Value = cl.Id.ToString()
+                }),
+            };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -142,7 +156,8 @@ namespace BlazorProject.Areas.Identity.Pages.Account
                     State = Input.State,
                     City = Input.City,
                     PostalCode = Input.PostalCode,
-                    Role = Input.Role
+                    Role = Input.Role,
+                    DepartmentId = (int)Input.DepartmentId
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

@@ -4,6 +4,7 @@ using BlazorProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231027060852_addPfAmountColToFinanceTable")]
+    partial class addPfAmountColToFinanceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +68,8 @@ namespace BlazorProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Overtime")
+                        .HasColumnType("int");
 
                     b.Property<bool>("PF")
                         .HasColumnType("bit");
@@ -76,12 +77,13 @@ namespace BlazorProject.Data.Migrations
                     b.Property<int>("Package")
                         .HasColumnType("int");
 
+                    b.Property<int>("PfAmount")
+                        .HasColumnType("int");
+
                     b.Property<int>("Salary")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Finances");
                 });
@@ -197,12 +199,6 @@ namespace BlazorProject.Data.Migrations
 
                     b.Property<DateTime>("Month")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Overtime")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PfAmount")
-                        .HasColumnType("int");
 
                     b.Property<int>("Salary")
                         .HasColumnType("int");
@@ -542,6 +538,9 @@ namespace BlazorProject.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("FinanceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -556,18 +555,9 @@ namespace BlazorProject.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("FinanceId");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("BlazorProject.Models.Finance", b =>
-                {
-                    b.HasOne("BlazorProject.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("BlazorProject.Models.Leave", b =>
@@ -603,7 +593,7 @@ namespace BlazorProject.Data.Migrations
             modelBuilder.Entity("BlazorProject.Models.MonthlySalary", b =>
                 {
                     b.HasOne("BlazorProject.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("MonthlySalaries")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -700,12 +690,15 @@ namespace BlazorProject.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
-                });
+                    b.HasOne("BlazorProject.Models.Finance", "Finance")
+                        .WithMany()
+                        .HasForeignKey("FinanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("BlazorProject.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("MonthlySalaries");
+                    b.Navigation("Department");
+
+                    b.Navigation("Finance");
                 });
 #pragma warning restore 612, 618
         }

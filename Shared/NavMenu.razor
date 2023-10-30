@@ -90,14 +90,14 @@
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="department">
-                    <span class="oi oi-elevator" aria-hidden="true"></span> Department Management
+                    <span class="oi oi-excerpt" aria-hidden="true"></span> Department Management
                 </NavLink>
             </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="userDepartmentPackageManagement">
-                    <span class="oi oi-bug" aria-hidden="true"></span> Dep.Package Management
+                <NavLink class="nav-link" href="userPackageManagement">
+                    <span class="oi oi-dollar" aria-hidden="true"></span> Package Management
                 </NavLink>
             </div>
         </AuthorizeView>
@@ -105,6 +105,13 @@
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="salaryCredit">
                     <span class="oi oi-euro" aria-hidden="true"></span> Salary Credit
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Individual User">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="paySlips">
+                    <span class="oi oi-british-pound" aria-hidden="true"></span> PaySlips
                 </NavLink>
             </div>
         </AuthorizeView>

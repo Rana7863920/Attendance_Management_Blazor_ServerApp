@@ -4,6 +4,7 @@ using BlazorProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231030063404_addApplicationUserForeignKeyToFinanceTableAndRemoveFinanceTableForeignKeyFromApplicationUser")]
+    partial class addApplicationUserForeignKeyToFinanceTableAndRemoveFinanceTableForeignKeyFromApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,10 +72,16 @@ namespace BlazorProject.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Overtime")
+                        .HasColumnType("int");
+
                     b.Property<bool>("PF")
                         .HasColumnType("bit");
 
                     b.Property<int>("Package")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PfAmount")
                         .HasColumnType("int");
 
                     b.Property<int>("Salary")
@@ -197,12 +205,6 @@ namespace BlazorProject.Data.Migrations
 
                     b.Property<DateTime>("Month")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Overtime")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PfAmount")
-                        .HasColumnType("int");
 
                     b.Property<int>("Salary")
                         .HasColumnType("int");
@@ -603,7 +605,7 @@ namespace BlazorProject.Data.Migrations
             modelBuilder.Entity("BlazorProject.Models.MonthlySalary", b =>
                 {
                     b.HasOne("BlazorProject.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("MonthlySalaries")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -701,11 +703,6 @@ namespace BlazorProject.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("BlazorProject.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("MonthlySalaries");
                 });
 #pragma warning restore 612, 618
         }

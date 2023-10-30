@@ -1,6 +1,143 @@
 ﻿@page "/salaryCredit"
+@using BlazorProject.Models
+@using BlazorProject.Service.IService
+@using BlazorBootstrap
 <h3>SalaryCredit</h3>
 
-@code {
+<EditForm Model="@ApplicationUser" OnValidSubmit="@UserSubmitForm">
+    <div class="row">
+        <div class="col-5">
+            <label style="margin-left:2%;color:black;font-size:large">Application User</label>
+            <InputSelect @bind-Value="ApplicationUser.Id" class="p-lg-2 col-md-7">
+                <option selected disabled class="text-center">-- User --</option>
+                @foreach (var user in UserList)
+                {
+                    <option value="@user.Id">@user.Name</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary" style="background-color:darkblue;" value="Update">Submit</button>
+        </div>
+    </div>
+</EditForm>
+<EditForm Model="@MonthlySalary" OnValidSubmit="@MonthlySalarySubmitForm">
+    <div class="col-6 m-2 p-2" style="border:1px solid black">
+        <div class="form-group m-2 p-2">
+            <div class="row">
+                <label style="margin-left:-2%;font-size:large">Salary</label>
+                <InputNumber @bind-Value="Salary" class="form-control" placeholder="Salary" disabled=true />
+            </div>
+        </div>
+        <div class="form-group m-2 p-2">
+            <div class="row">
+                <label style="margin-left:-2%;font-size:large">PF</label>
+                <InputNumber @bind-Value="PfAmount" class="form-control" placeholder="PF" disabled=true />
+            </div>
+        </div>
+        <div class="form-group m-2 p-2">
+            <div class="row">
+                <label style="margin-left:-2%;font-size:large">OverTime</label>
+                <InputText Value="@OverTime" class="form-control" placeholder="OverTime" ValueChanged="OverTimeChanged" ValueExpression="() => OverTime" />
+            </div>
+        </div>
+        <div class="form-group m-2 p-2">
+            <div class="row">
+                <label style="margin-left:-2%;font-size:large">Total</label>
+                <InputNumber @bind-Value="Total" class="form-control" placeholder="Total" />
+            </div>
+        </div>
+        <div class="form-group m-2 p-2">
+            <div class="col-5 m-auto">
+                <button type="submit" class="btn form-control" style="background-color:limegreen;" value="Update">Credit</button>
+            </div>
+        </div>
+    </div> 
+</EditForm>
+<Toasts class="p-3" Messages="messages" Delay="6000" Placement="ToastsPlacement.TopRight" />
 
+@code {
+    [Inject]
+    protected IUserService userService { get; set; }
+    [Inject]
+    protected ISalaryService salaryService { get; set; }
+    [Inject]
+    protected IFinanceService financeService { get; set; }
+    protected ApplicationUser ApplicationUser { get; set; } = new ApplicationUser()
+                                                            {
+                                                                Department = new Department()
+                                                            };
+    protected IEnumerable<ApplicationUser> UserList { get; set; }
+    protected MonthlySalary MonthlySalary { get; set; } = new MonthlySalary()
+                                                        {
+                                                            ApplicationUser = new ApplicationUser()
+                                                        };
+    protected int Salary { get; set; }
+    protected int PfAmount { get; set; }
+    protected string OverTime { get; set; }
+    protected int Total { get; set; }
+    List<ToastMessage> messages = new List<ToastMessage>();
+    private ToastMessage CreateToastMessage(ToastType toastType, string message)
+    => new ToastMessage
+        {
+            Type = toastType,
+            Message = message,
+            AutoHide = true,
+        };
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        UserList = userService.GetAllUsers();
+    }
+
+    protected void OverTimeChanged(string value)
+    {
+        OverTime = value;
+        Total = Salary - PfAmount + Convert.ToInt32(OverTime);
+    }
+
+    public void UserSubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            OverTime = "0";
+            Total = 0;
+            var applicationUser = userService.GetUserById(ApplicationUser.Id);
+            ApplicationUser = applicationUser;
+            var userFinance = financeService.GetUserFinance(ApplicationUser.Id);
+            Salary = userFinance.Salary;
+            if (userFinance.PF)
+            {
+                PfAmount = userFinance.Salary * 12 / 100;
+            }
+            else
+            {
+                PfAmount = 0;
+            }
+        }
+    }
+
+    public void MonthlySalarySubmitForm(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            MonthlySalary.Salary = Total;
+            MonthlySalary.ApplicationUserId = ApplicationUser.Id;
+            MonthlySalary.PfAmount = PfAmount;
+            MonthlySalary.Overtime = Convert.ToInt32(OverTime);
+            MonthlySalary.ApplicationUser = ApplicationUser;
+            MonthlySalary.Month = DateTime.Now;
+            bool isCredited = salaryService.SalaryCredit(MonthlySalary);
+            if (isCredited)
+            {
+                Salary = 0;
+                PfAmount = 0;
+                OverTime = "0";
+                Total = 0;
+                messages.Add(CreateToastMessage(ToastType.Success, $"Salary Credited to User Account..."));
+            }
+        }
+    }
 }

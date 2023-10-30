@@ -4,6 +4,7 @@ using BlazorProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231030083130_changeFinancesIEnumerableInApplicationUserToFinanceAndAddSalaryPFPfAmountOvertimeColToMonthlySalaryTableFromFinance")]
+    partial class changeFinancesIEnumerableInApplicationUserToFinanceAndAddSalaryPFPfAmountOvertimeColToMonthlySalaryTableFromFinance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,9 +71,6 @@ namespace BlazorProject.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("PF")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Package")
                         .HasColumnType("int");
@@ -200,6 +199,9 @@ namespace BlazorProject.Data.Migrations
 
                     b.Property<int>("Overtime")
                         .HasColumnType("int");
+
+                    b.Property<bool>("PF")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PfAmount")
                         .HasColumnType("int");

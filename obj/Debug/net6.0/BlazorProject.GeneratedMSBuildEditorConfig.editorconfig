@@ -132,6 +132,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhdmVUeXBlXExlYXZlVHlwZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Blazor/BlazorProject/BlazorProject/Pages/PaySlips/PaySlips.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF5U2xpcHNcUGF5U2xpcHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Blazor/BlazorProject/BlazorProject/Pages/SalaryCredit/SalaryCredit.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsYXJ5Q3JlZGl0XFNhbGFyeUNyZWRpdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -152,8 +156,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza1xUYXNrUmVjb3JkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Blazor/BlazorProject/BlazorProject/Pages/UserDepartment And Package Management/UserDepartmentPackageManagement.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlckRlcGFydG1lbnQgQW5kIFBhY2thZ2UgTWFuYWdlbWVudFxVc2VyRGVwYXJ0bWVudFBhY2thZ2VNYW5hZ2VtZW50LnJhem9y
+[D:/Blazor/BlazorProject/BlazorProject/Pages/User Package Management/UserPackageManagement.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlciBQYWNrYWdlIE1hbmFnZW1lbnRcVXNlclBhY2thZ2VNYW5hZ2VtZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Blazor/BlazorProject/BlazorProject/Shared/LoginDisplay.razor]

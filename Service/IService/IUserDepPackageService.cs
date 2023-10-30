@@ -4,6 +4,6 @@ namespace BlazorProject.Service.IService
 {
     public interface IUserDepPackageService
     {
-        public bool AddDepPackage(ApplicationUser applicationUser, string optForPF);
+        public bool AddPackage(ApplicationUser applicationUser, string optForPF);
     }
 }

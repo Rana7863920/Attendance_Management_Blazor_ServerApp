@@ -13,5 +13,7 @@ namespace BlazorProject.Service.IService
         public IEnumerable<UserAttendance> GetAttendances();
         public IEnumerable<ApplicationUser> GetAllUsers();
         public ApplicationUser GetUserById(string id);
+        public bool UpdateUser(ApplicationUser user);
+        public ApplicationUser GetApplicationUser();
     }
 }

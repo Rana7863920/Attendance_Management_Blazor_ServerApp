@@ -34,6 +34,8 @@ builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddScoped<IAttendanceStatusService, AttendanceStatusService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IUserDepPackageService, UserDepPackageService>();
+builder.Services.AddScoped<ISalaryService, SalaryService>();    
+builder.Services.AddScoped<IFinanceService, FinanceService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
